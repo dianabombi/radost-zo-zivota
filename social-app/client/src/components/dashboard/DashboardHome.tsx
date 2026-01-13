@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../contexts/AuthContext';
 
 interface DashboardHomeProps {
-  onNavigate: (view: 'leaderboard' | 'verification' | 'game') => void;
+  onNavigate: (view: 'leaderboard' | 'verification' | 'game' | 'privacy' | 'gdpr') => void;
 }
 
 const DashboardHome: React.FC<DashboardHomeProps> = ({ onNavigate }) => {
@@ -197,6 +197,63 @@ const DashboardHome: React.FC<DashboardHomeProps> = ({ onNavigate }) => {
           <p className="text-light-text-secondary dark:text-gray-400 font-poppins text-xs sm:text-sm">
             - Hra na radosť zo života
           </p>
+        </div>
+      </div>
+
+      {/* Legal & Info Section */}
+      <div>
+        <h2 className="text-xl sm:text-2xl font-poppins font-bold text-light-text dark:text-white mb-4 flex items-center gap-2">
+          <span>📋</span>
+          <span>Právne informácie</span>
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {/* Privacy Policy Button */}
+          <button
+            onClick={() => onNavigate('privacy')}
+            className="group relative overflow-hidden bg-white dark:bg-charcoal-light border-2 border-electric-blue rounded-lg sm:rounded-xl p-6 hover:shadow-neon-blue transition-all duration-300 text-left"
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-electric-blue to-vibrant-green opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
+            
+            <div className="relative z-10">
+              <div className="text-4xl mb-3 group-hover:scale-110 transition-transform">
+                🔒
+              </div>
+              <h3 className="text-lg font-poppins font-bold text-light-text dark:text-white mb-2">
+                Privacy Policy
+              </h3>
+              <p className="text-light-text-secondary dark:text-gray-400 font-poppins text-sm mb-3">
+                Zásady ochrany osobných údajov
+              </p>
+              <div className="flex items-center gap-2 text-electric-blue font-poppins font-semibold text-sm group-hover:text-vibrant-green transition-colors">
+                <span>Zobraziť</span>
+                <span className="group-hover:translate-x-1 transition-transform">→</span>
+              </div>
+            </div>
+          </button>
+
+          {/* GDPR Button */}
+          <button
+            onClick={() => onNavigate('gdpr')}
+            className="group relative overflow-hidden bg-white dark:bg-charcoal-light border-2 border-vibrant-green rounded-lg sm:rounded-xl p-6 hover:shadow-neon-green transition-all duration-300 text-left"
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-vibrant-green to-warm-yellow opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
+            
+            <div className="relative z-10">
+              <div className="text-4xl mb-3 group-hover:scale-110 transition-transform">
+                🇪🇺
+              </div>
+              <h3 className="text-lg font-poppins font-bold text-light-text dark:text-white mb-2">
+                GDPR
+              </h3>
+              <p className="text-light-text-secondary dark:text-gray-400 font-poppins text-sm mb-3">
+                Vaše práva a ochrana údajov
+              </p>
+              <div className="flex items-center gap-2 text-vibrant-green font-poppins font-semibold text-sm group-hover:text-warm-yellow transition-colors">
+                <span>Zobraziť</span>
+                <span className="group-hover:translate-x-1 transition-transform">→</span>
+              </div>
+            </div>
+          </button>
         </div>
       </div>
     </div>

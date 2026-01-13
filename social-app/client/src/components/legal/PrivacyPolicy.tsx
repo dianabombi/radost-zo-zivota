@@ -91,11 +91,29 @@ const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({ onBack }) => {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-electric-blue mb-3">7. Kontakt</h2>
+            <h2 className="text-xl font-bold text-electric-blue mb-3">7. Prevádzkovateľ údajov</h2>
+            <div className="bg-gradient-to-r from-electric-blue to-vibrant-green p-[2px] rounded-xl mb-4">
+              <div className="bg-white dark:bg-charcoal rounded-xl p-4">
+                <p className="text-sm sm:text-base leading-relaxed">
+                  <strong>Wavelyne SINGLE MEMBER P.C.</strong><br />
+                  Leof. Andrea Siggrou 196<br />
+                  Kallithea 176 71, Athens<br />
+                  VAT: EL802952696<br />
+                  <br />
+                  Tel: <a href="tel:+306906720388" className="text-electric-blue hover:underline">+30 690 672 0388</a><br />
+                  E-mail: <a href="mailto:wavelynecomp@gmail.com" className="text-vibrant-green hover:underline">wavelynecomp@gmail.com</a><br />
+                  Web: <a href="https://wavelynecode.com" className="text-electric-blue hover:underline" target="_blank" rel="noopener noreferrer">wavelynecode.com</a>
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <h2 className="text-xl font-bold text-electric-blue mb-3">8. Kontakt</h2>
             <p className="text-sm sm:text-base leading-relaxed">
               Ak máte otázky týkajúce sa týchto zásad, kontaktujte nás na:{' '}
-              <a href="mailto:privacy@wavelyne.com" className="text-vibrant-green hover:underline">
-                privacy@wavelyne.com
+              <a href="mailto:wavelynecomp@gmail.com" className="text-vibrant-green hover:underline">
+                wavelynecomp@gmail.com
               </a>
             </p>
           </section>
