@@ -1,0 +1,139 @@
+{
+  "app": {
+    "title": "Hra na radosť zo života",
+    "subtitle": "Spájaj • Zdieľaj • Hraj • Ži"
+  },
+  "nav": {
+    "home": "Domov",
+    "leaderboard": "Skóre",
+    "verification": "Overenie",
+    "game": "Hra"
+  },
+  "auth": {
+    "login": "Prihlásenie",
+    "register": "Registrácia",
+    "email": "E-mail",
+    "password": "Heslo",
+    "confirmPassword": "Potvrď heslo",
+    "nickname": "Prezývka",
+    "city": "Mesto",
+    "region": "Kraj",
+    "country": "Krajina",
+    "loginButton": "Prihlásiť sa",
+    "registerButton": "Registrovať sa",
+    "forgotPassword": "Zabudol si heslo?",
+    "noAccount": "Nemáš účet?",
+    "hasAccount": "Už máš účet?",
+    "loginTitle": "Prihlásenie",
+    "loginSubtitle": "Vstúp do hry na radosť zo života",
+    "registerSubtitle": "Pripoj sa k hre na radosť zo života",
+    "logout": "Odhlásiť sa",
+    "validation": {
+      "emailRequired": "E-mail je povinný",
+      "emailInvalid": "Neplatný formát e-mailu",
+      "passwordRequired": "Heslo je povinné",
+      "passwordMinLength": "Heslo musí mať aspoň 6 znakov",
+      "confirmPasswordRequired": "Potvrdenie hesla je povinné",
+      "passwordsMismatch": "Heslá sa nezhodujú",
+      "nicknameRequired": "Prezývka je povinná",
+      "nicknameMinLength": "Prezývka musí mať aspoň 3 znaky"
+    },
+    "demoMode": "Demo mód: Supabase nie je nakonfigurovaný. Použite ľubovoľný e-mail a heslo (min. 6 znakov)."
+  },
+  "dashboard": {
+    "welcome": "Vitaj späť",
+    "subtitle": "Pripravený na ďalšie dobrodružstvo?",
+    "stats": {
+      "interactions": "Interakcie",
+      "points": "Body",
+      "level": "Level",
+      "rank": "Poradie"
+    },
+    "quickActions": {
+      "title": "Rýchle Akcie",
+      "verifyMeeting": "Overiť stretnutie",
+      "viewLeaderboard": "Zobraziť rebríček",
+      "playGame": "Hrať hru"
+    },
+    "progress": {
+      "title": "Tvoj Progres",
+      "nextLevel": "Do ďalšieho levelu"
+    }
+  },
+  "verification": {
+    "title": "Overenie blízkosti",
+    "subtitle": "Potvrď stretnutia s ostatnými hráčmi",
+    "methods": {
+      "qrCode": "QR Kód",
+      "bluetooth": "Bluetooth",
+      "email": "E-mail"
+    },
+    "pending": {
+      "title": "Čakajúce žiadosti",
+      "empty": "Žiadne čakajúce žiadosti",
+      "emptyDesc": "Keď ti niekto pošle žiadosť o potvrdenie stretnutia, zobrazí sa tu",
+      "confirm": "Potvrdiť",
+      "reject": "Odmietnuť",
+      "wantsToMeet": "Chce potvrdiť stretnutie s tebou"
+    },
+    "history": {
+      "title": "Tvoje spojenia",
+      "empty": "Zatiaľ žiadne spojenia",
+      "emptyDesc": "Stretni sa s ľuďmi a potvrď stretnutia, aby sa tu zobrazili",
+      "meetings": "stretnutí",
+      "points": "bodov",
+      "lastMet": "naposledy",
+      "firstMeeting": "Prvé stretnutie"
+    },
+    "qr": {
+      "generate": "Vygeneruj QR kód",
+      "scan": "Naskenuj QR kód",
+      "yourCode": "Tvoj QR kód",
+      "shareCode": "Zdieľaj tento kód",
+      "scanOther": "Naskenuj kód iného hráča"
+    },
+    "bluetooth": {
+      "title": "Bluetooth blízkosť",
+      "scanning": "Hľadám zariadenia...",
+      "found": "Nájdené zariadenia",
+      "connect": "Pripojiť",
+      "distance": "Vzdialenosť"
+    },
+    "email": {
+      "title": "E-mailové overenie",
+      "sendRequest": "Pošli žiadosť",
+      "enterEmail": "Zadaj e-mail hráča",
+      "requestSent": "Žiadosť odoslaná"
+    }
+  },
+  "leaderboard": {
+    "title": "Rebríček",
+    "tabs": {
+      "individual": "Jednotlivci",
+      "group": "Skupiny",
+      "community": "Komunity",
+      "city": "Mestá"
+    },
+    "rank": "Poradie",
+    "player": "Hráč",
+    "points": "Body",
+    "interactions": "Interakcie",
+    "yourRank": "Tvoje poradie",
+    "globalGoal": "Globálny cieľ",
+    "current": "Aktuálne",
+    "target": "Cieľ"
+  },
+  "common": {
+    "loading": "Načítavam...",
+    "error": "Chyba",
+    "success": "Úspech",
+    "cancel": "Zrušiť",
+    "save": "Uložiť",
+    "close": "Zavrieť",
+    "back": "Späť",
+    "next": "Ďalej",
+    "finish": "Dokončiť",
+    "search": "Hľadať",
+    "filter": "Filtrovať"
+  }
+}

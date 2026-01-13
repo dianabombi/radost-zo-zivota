@@ -1,0 +1,139 @@
+{
+  "app": {
+    "title": "Game for the Joy of Life",
+    "subtitle": "Connect • Share • Play • Live"
+  },
+  "nav": {
+    "home": "Home",
+    "leaderboard": "Leaderboard",
+    "verification": "Verification",
+    "game": "Game"
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "email": "E-mail",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "nickname": "Nickname",
+    "city": "City",
+    "region": "Region",
+    "country": "Country",
+    "loginButton": "Log In",
+    "registerButton": "Sign Up",
+    "forgotPassword": "Forgot password?",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "loginTitle": "Login",
+    "loginSubtitle": "Enter the game for the joy of life",
+    "registerSubtitle": "Join the game for the joy of life",
+    "logout": "Log Out",
+    "validation": {
+      "emailRequired": "E-mail is required",
+      "emailInvalid": "Invalid e-mail format",
+      "passwordRequired": "Password is required",
+      "passwordMinLength": "Password must be at least 6 characters",
+      "confirmPasswordRequired": "Password confirmation is required",
+      "passwordsMismatch": "Passwords do not match",
+      "nicknameRequired": "Nickname is required",
+      "nicknameMinLength": "Nickname must be at least 3 characters"
+    },
+    "demoMode": "Demo mode: Supabase is not configured. Use any e-mail and password (min. 6 characters)."
+  },
+  "dashboard": {
+    "welcome": "Welcome back",
+    "subtitle": "Ready for another adventure?",
+    "stats": {
+      "interactions": "Interactions",
+      "points": "Points",
+      "level": "Level",
+      "rank": "Rank"
+    },
+    "quickActions": {
+      "title": "Quick Actions",
+      "verifyMeeting": "Verify Meeting",
+      "viewLeaderboard": "View Leaderboard",
+      "playGame": "Play Game"
+    },
+    "progress": {
+      "title": "Your Progress",
+      "nextLevel": "To Next Level"
+    }
+  },
+  "verification": {
+    "title": "Proximity Verification",
+    "subtitle": "Confirm meetings with other players",
+    "methods": {
+      "qrCode": "QR Code",
+      "bluetooth": "Bluetooth",
+      "email": "E-mail"
+    },
+    "pending": {
+      "title": "Pending Requests",
+      "empty": "No pending requests",
+      "emptyDesc": "When someone sends you a meeting confirmation request, it will appear here",
+      "confirm": "Confirm",
+      "reject": "Reject",
+      "wantsToMeet": "Wants to confirm meeting with you"
+    },
+    "history": {
+      "title": "Your Connections",
+      "empty": "No connections yet",
+      "emptyDesc": "Meet people and confirm meetings to see them here",
+      "meetings": "meetings",
+      "points": "points",
+      "lastMet": "last met",
+      "firstMeeting": "First meeting"
+    },
+    "qr": {
+      "generate": "Generate QR Code",
+      "scan": "Scan QR Code",
+      "yourCode": "Your QR Code",
+      "shareCode": "Share this code",
+      "scanOther": "Scan another player's code"
+    },
+    "bluetooth": {
+      "title": "Bluetooth Proximity",
+      "scanning": "Searching for devices...",
+      "found": "Found Devices",
+      "connect": "Connect",
+      "distance": "Distance"
+    },
+    "email": {
+      "title": "Email Verification",
+      "sendRequest": "Send Request",
+      "enterEmail": "Enter player's email",
+      "requestSent": "Request sent"
+    }
+  },
+  "leaderboard": {
+    "title": "Leaderboard",
+    "tabs": {
+      "individual": "Individual",
+      "group": "Groups",
+      "community": "Communities",
+      "city": "Cities"
+    },
+    "rank": "Rank",
+    "player": "Player",
+    "points": "Points",
+    "interactions": "Interactions",
+    "yourRank": "Your Rank",
+    "globalGoal": "Global Goal",
+    "current": "Current",
+    "target": "Target"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "save": "Save",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "finish": "Finish",
+    "search": "Search",
+    "filter": "Filter"
+  }
+}

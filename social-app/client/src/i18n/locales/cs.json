@@ -1,0 +1,139 @@
+{
+  "app": {
+    "title": "Hra na radost ze života",
+    "subtitle": "Spojuj • Sdílej • Hraj • Žij"
+  },
+  "nav": {
+    "home": "Domů",
+    "leaderboard": "Skóre",
+    "verification": "Ověření",
+    "game": "Hra"
+  },
+  "auth": {
+    "login": "Přihlášení",
+    "register": "Registrace",
+    "email": "E-mail",
+    "password": "Heslo",
+    "confirmPassword": "Potvrď heslo",
+    "nickname": "Přezdívka",
+    "city": "Město",
+    "region": "Kraj",
+    "country": "Země",
+    "loginButton": "Přihlásit se",
+    "registerButton": "Registrovat se",
+    "forgotPassword": "Zapomněl jsi heslo?",
+    "noAccount": "Nemáš účet?",
+    "hasAccount": "Už máš účet?",
+    "loginTitle": "Přihlášení",
+    "loginSubtitle": "Vstup do hry na radost ze života",
+    "registerSubtitle": "Připoj se ke hře na radost ze života",
+    "logout": "Odhlásit se",
+    "validation": {
+      "emailRequired": "E-mail je povinný",
+      "emailInvalid": "Neplatný formát e-mailu",
+      "passwordRequired": "Heslo je povinné",
+      "passwordMinLength": "Heslo musí mít alespoň 6 znaků",
+      "confirmPasswordRequired": "Potvrzení hesla je povinné",
+      "passwordsMismatch": "Hesla se neshodují",
+      "nicknameRequired": "Přezdívka je povinná",
+      "nicknameMinLength": "Přezdívka musí mít alespoň 3 znaky"
+    },
+    "demoMode": "Demo režim: Supabase není nakonfigurován. Použijte libovolný e-mail a heslo (min. 6 znaků)."
+  },
+  "dashboard": {
+    "welcome": "Vítej zpět",
+    "subtitle": "Připravený na další dobrodružství?",
+    "stats": {
+      "interactions": "Interakce",
+      "points": "Body",
+      "level": "Level",
+      "rank": "Pořadí"
+    },
+    "quickActions": {
+      "title": "Rychlé Akce",
+      "verifyMeeting": "Ověřit setkání",
+      "viewLeaderboard": "Zobrazit žebříček",
+      "playGame": "Hrát hru"
+    },
+    "progress": {
+      "title": "Tvůj Progres",
+      "nextLevel": "Do dalšího levelu"
+    }
+  },
+  "verification": {
+    "title": "Ověření blízkosti",
+    "subtitle": "Potvrď setkání s ostatními hráči",
+    "methods": {
+      "qrCode": "QR Kód",
+      "bluetooth": "Bluetooth",
+      "email": "E-mail"
+    },
+    "pending": {
+      "title": "Čekající žádosti",
+      "empty": "Žádné čekající žádosti",
+      "emptyDesc": "Když ti někdo pošle žádost o potvrzení setkání, zobrazí se zde",
+      "confirm": "Potvrdit",
+      "reject": "Odmítnout",
+      "wantsToMeet": "Chce potvrdit setkání s tebou"
+    },
+    "history": {
+      "title": "Tvá spojení",
+      "empty": "Zatím žádná spojení",
+      "emptyDesc": "Setkej se s lidmi a potvrď setkání, aby se zde zobrazila",
+      "meetings": "setkání",
+      "points": "bodů",
+      "lastMet": "naposledy",
+      "firstMeeting": "První setkání"
+    },
+    "qr": {
+      "generate": "Vygeneruj QR kód",
+      "scan": "Naskenuj QR kód",
+      "yourCode": "Tvůj QR kód",
+      "shareCode": "Sdílej tento kód",
+      "scanOther": "Naskenuj kód jiného hráče"
+    },
+    "bluetooth": {
+      "title": "Bluetooth blízkost",
+      "scanning": "Hledám zařízení...",
+      "found": "Nalezená zařízení",
+      "connect": "Připojit",
+      "distance": "Vzdálenost"
+    },
+    "email": {
+      "title": "E-mailové ověření",
+      "sendRequest": "Pošli žádost",
+      "enterEmail": "Zadej e-mail hráče",
+      "requestSent": "Žádost odeslána"
+    }
+  },
+  "leaderboard": {
+    "title": "Žebříček",
+    "tabs": {
+      "individual": "Jednotlivci",
+      "group": "Skupiny",
+      "community": "Komunity",
+      "city": "Města"
+    },
+    "rank": "Pořadí",
+    "player": "Hráč",
+    "points": "Body",
+    "interactions": "Interakce",
+    "yourRank": "Tvé pořadí",
+    "globalGoal": "Globální cíl",
+    "current": "Aktuálně",
+    "target": "Cíl"
+  },
+  "common": {
+    "loading": "Načítám...",
+    "error": "Chyba",
+    "success": "Úspěch",
+    "cancel": "Zrušit",
+    "save": "Uložit",
+    "close": "Zavřít",
+    "back": "Zpět",
+    "next": "Další",
+    "finish": "Dokončit",
+    "search": "Hledat",
+    "filter": "Filtrovat"
+  }
+}
