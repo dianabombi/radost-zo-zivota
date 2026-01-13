@@ -179,49 +179,46 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
       }
 
-      // Use real Supabase authentication with timeout
+      // Use real Supabase authentication
       console.log('Attempting Supabase login...');
       
-      // Create a timeout promise
-      const timeoutPromise = new Promise((_, reject) => {
-        setTimeout(() => reject(new Error('Časový limit prihlásenia vypršal. Skúste to znova.')), 10000);
-      });
-
-      // Race between login and timeout
-      const loginPromise = supabase.auth.signInWithPassword({
+      const { data, error } = await supabase.auth.signInWithPassword({
         email: credentials.email,
         password: credentials.password,
       });
 
-      const { data, error } = await Promise.race([loginPromise, timeoutPromise]) as any;
-
       if (error) {
         console.error('Supabase login error:', error);
         const errorMessage = error.message === 'Invalid login credentials' 
-          ? 'Nesprávne prihlasovacie údaje. Nemáte ešte účet? Zaregistrujte sa.' 
+          ? '❌ Nesprávne prihlasovacie údaje.\n\n💡 Nemáte ešte účet? Kliknite na "Zaregistrujte sa" nižšie.' 
           : error.message === 'Failed to fetch'
-          ? 'Chyba pripojenia k serveru. Skontrolujte databázu.'
+          ? 'Chyba pripojenia k serveru. Skontrolujte pripojenie k internetu.'
           : error.message;
         throw new Error(errorMessage);
       }
 
       if (data?.user) {
-        // Get user profile from database with timeout
-        const profilePromise = supabase
+        // Get user profile from database
+        const { data: profile, error: profileError } = await supabase
           .from('users')
           .select('*')
           .eq('id', data.user.id)
           .single();
-
-        const profileTimeout = new Promise((_, reject) => {
-          setTimeout(() => reject(new Error('Časový limit načítania profilu vypršal')), 5000);
-        });
-
-        const { data: profile, error: profileError } = await Promise.race([profilePromise, profileTimeout]) as any;
         
         if (profileError) {
           console.error('Error fetching profile:', profileError);
-          throw new Error('Chyba pri načítaní profilu používateľa');
+          
+          // Check if it's a table/schema error
+          if (profileError.code === '42P01' || profileError.message?.includes('relation') || profileError.message?.includes('does not exist')) {
+            throw new Error('⚠️ Databáza nie je nastavená. Spustite schema-simple.sql v Supabase SQL Editor.');
+          }
+          
+          // Check if it's a policy error
+          if (profileError.code === '42501' || profileError.message?.includes('policy')) {
+            throw new Error('⚠️ Profil používateľa nebol nájdený. Skontrolujte RLS politiky v Supabase.');
+          }
+          
+          throw new Error(`Chyba pri načítaní profilu: ${profileError.message}`);
         }
 
         if (profile) {
@@ -240,7 +237,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           };
           dispatch({ type: 'AUTH_SUCCESS', payload: user });
         } else {
-          throw new Error('Profil používateľa nebol najdený');
+          throw new Error('Profil používateľa nebol najdený. Zaregistrujte sa najprv.');
         }
       }
     } catch (error) {

@@ -59,16 +59,6 @@ const DashboardHome: React.FC<DashboardHomeProps> = ({ onNavigate }) => {
           </div>
 
           <div className="relative z-10">
-            {/* Greeting */}
-            <div className="text-center mb-6 sm:mb-8">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-poppins font-bold text-transparent bg-gradient-to-r from-electric-blue to-vibrant-green bg-clip-text mb-2 sm:mb-3">
-                {t('dashboard.welcome')}, {user?.nickname}! 👋
-              </h2>
-              <p className="text-light-text-secondary dark:text-gray-300 font-poppins text-base sm:text-lg md:text-xl opacity-80">
-                {t('dashboard.subtitle')}
-              </p>
-            </div>
-
             {/* Stats Grid */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
               {/* Level */}

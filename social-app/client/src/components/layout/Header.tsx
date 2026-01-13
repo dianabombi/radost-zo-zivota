@@ -15,7 +15,6 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({
-  title,
   className = '',
   viewMode = 'home',
   onViewChange,
@@ -23,15 +22,13 @@ const Header: React.FC<HeaderProps> = ({
   const { t } = useTranslation();
   const { user, logout } = useAuth();
   const { toggleTheme } = useTheme();
-  
-  const displayTitle = title || t('app.title');
 
   return (
     <header className={`pt-2 pb-4 sm:pt-3 sm:pb-6 mb-6 sm:mb-8 ${className}`}>
 
       {/* Navigation Buttons */}
       {onViewChange && (
-        <div className="flex justify-center gap-3 sm:gap-3 mb-4 sm:mb-6">
+        <div className="flex justify-start gap-3 sm:gap-3 mb-4 sm:mb-6">
           <button
             onClick={() => onViewChange('home')}
             className={`px-4 sm:px-6 py-2 sm:py-3 rounded-xl font-poppins font-semibold text-sm sm:text-base transition-all ${
@@ -68,23 +65,36 @@ const Header: React.FC<HeaderProps> = ({
       <div className="flex flex-col lg:flex-row items-center justify-between gap-4 lg:gap-6">
         {/* Title & Subtitle with Logo */}
         <div className="flex-1 order-1 lg:order-1 w-full lg:w-auto">
-          <div className="text-center">
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-poppins font-black text-transparent bg-gradient-to-r from-electric-blue via-vibrant-green to-warm-yellow bg-clip-text mb-1 sm:mb-2">
-              {displayTitle}
-            </h1>
-            <p className="text-light-text-secondary dark:text-gray-300 font-poppins text-sm sm:text-base md:text-lg opacity-90 tracking-wide px-4">
-              {t('app.subtitle')}
-            </p>
-          </div>
-          {/* Logo - Bottom Right of Title */}
-          <div className="flex justify-end mt-2 pr-4 lg:pr-8">
+          <div className="flex flex-col items-start gap-2 sm:gap-3">
+            {/* Logo on top */}
             <img 
               src="/logoRadost.png" 
               alt="Hra na radosť zo života logo" 
-              className="h-10 sm:h-12 md:h-16 lg:h-20 w-auto object-contain"
+              className="h-12 sm:h-16 md:h-20 lg:h-24 w-auto object-contain"
             />
+            {/* Title below logo */}
+            <div className="text-left">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-poppins font-black text-transparent bg-gradient-to-r from-electric-blue via-vibrant-green to-warm-yellow bg-clip-text mb-1 sm:mb-2 leading-tight">
+                Hra na radosť<br />zo života
+              </h1>
+              <p className="text-light-text-secondary dark:text-gray-300 font-poppins text-sm sm:text-base md:text-lg opacity-90 tracking-wide mt-2">
+                {t('app.subtitle')}
+              </p>
+            </div>
           </div>
         </div>
+
+        {/* Welcome Message - Middle */}
+        {user && (
+          <div className="flex-shrink-0 order-2 w-full lg:w-auto text-center">
+            <p className="font-poppins text-lg sm:text-xl md:text-2xl text-electric-blue dark:text-vibrant-green mb-2">
+              Vitaj späť, <span className="font-bold text-warm-yellow">{user.nickname}</span>! 👋
+            </p>
+            <p className="font-poppins text-sm sm:text-base md:text-lg text-light-text-secondary dark:text-gray-300 opacity-80">
+              Pripravený na ďalšie dobrodružstvo?
+            </p>
+          </div>
+        )}
 
         {/* User Profile - Right */}
         {user && (
@@ -104,7 +114,7 @@ const Header: React.FC<HeaderProps> = ({
               </div>
 
               <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-electric-blue to-vibrant-green rounded-full flex items-center justify-center text-lg sm:text-xl font-bold text-white flex-shrink-0">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-electric-blue to-vibrant-green rounded-full flex items-center justify-center text-lg sm:text-xl font-bold text-white flex-shrink-0 ring-2 ring-warm-yellow ring-offset-2 ring-offset-charcoal-light">
                   {user.nickname.charAt(0).toUpperCase()}
                 </div>
                 <div>
