@@ -25,7 +25,6 @@ const VerificationHub: React.FC = () => {
   const [verifiedEmail, setVerifiedEmail] = useState<string>('');
   const [lastExchange, setLastExchange] = useState<Exchange | null>(null);
   const [interactionResult, setInteractionResult] = useState<InteractionResult | null>(null);
-  const [isSubmittingInteraction, setIsSubmittingInteraction] = useState(false);
 
   // Mock data - replace with real API calls later
   const mockPendingRequests: MeetingRequest[] = [
@@ -117,8 +116,6 @@ const VerificationHub: React.FC = () => {
     
     if (!user) return;
     
-    setIsSubmittingInteraction(true);
-    
     // Submit individual interaction
     const result = await submitInteraction({
       userId: user.id,
@@ -129,8 +126,6 @@ const VerificationHub: React.FC = () => {
         qrCode: code,
       },
     });
-    
-    setIsSubmittingInteraction(false);
     setInteractionResult(result);
     
     if (result.success) {
@@ -150,8 +145,6 @@ const VerificationHub: React.FC = () => {
     
     if (!user) return;
     
-    setIsSubmittingInteraction(true);
-    
     // Submit individual interaction
     const result = await submitInteraction({
       userId: user.id,
@@ -163,8 +156,6 @@ const VerificationHub: React.FC = () => {
         deviceId: device.id,
       },
     });
-    
-    setIsSubmittingInteraction(false);
     setInteractionResult(result);
     
     if (result.success) {
