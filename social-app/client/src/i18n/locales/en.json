@@ -135,5 +135,21 @@
     "finish": "Finish",
     "search": "Search",
     "filter": "Filter"
+  },
+  "profile": {
+    "level": "Level",
+    "points": "Points",
+    "days": "Days"
+  },
+  "progression": {
+    "toNextLevel": "To next level",
+    "interactions": "interactions",
+    "communityLevel": "Community Level",
+    "cityLevel": "City Level",
+    "newLevel": "New Level",
+    "congratulations": "Congratulations! You've reached the required number of interactions and unlocked a new competition level"
+  },
+  "quickActions": {
+    "collectPoints": "Collect points and have fun"
   }
 }

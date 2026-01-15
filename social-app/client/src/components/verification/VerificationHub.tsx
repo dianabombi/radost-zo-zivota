@@ -8,8 +8,11 @@ import ConnectionHistory from './ConnectionHistory';
 import ExchangeForm from '../exchange/ExchangeForm';
 import ExchangeSuccess from '../exchange/ExchangeSuccess';
 import ExchangeHistory from '../exchange/ExchangeHistory';
+import InteractionSuccess from './InteractionSuccess';
 import Button from '../ui/Button';
 import { useAuth } from '../../contexts/AuthContext';
+import { submitInteraction } from '../../services/interactionService';
+import type { InteractionResult } from '../../services/interactionService';
 
 type ViewMode = 'methods' | 'pending' | 'history' | 'exchanges';
 type FlowState = 'select_method' | 'verifying' | 'exchange_form' | 'success';
@@ -21,6 +24,8 @@ const VerificationHub: React.FC = () => {
   const [flowState, setFlowState] = useState<FlowState>('select_method');
   const [verifiedEmail, setVerifiedEmail] = useState<string>('');
   const [lastExchange, setLastExchange] = useState<Exchange | null>(null);
+  const [interactionResult, setInteractionResult] = useState<InteractionResult | null>(null);
+  const [isSubmittingInteraction, setIsSubmittingInteraction] = useState(false);
 
   // Mock data - replace with real API calls later
   const mockPendingRequests: MeetingRequest[] = [
@@ -107,18 +112,71 @@ const VerificationHub: React.FC = () => {
     },
   ];
 
-  const handleQRScan = (code: string) => {
+  const handleQRScan = async (code: string) => {
     console.log('QR Code scanned:', code);
-    // Simulate successful verification
-    setVerifiedEmail('scanned.user@email.com');
-    setFlowState('exchange_form');
+    
+    if (!user) return;
+    
+    setIsSubmittingInteraction(true);
+    
+    // Submit individual interaction
+    const result = await submitInteraction({
+      userId: user.id,
+      verificationMethod: 'qr_code',
+      interactionType: 'individual',
+      levelType: 'individual',
+      metadata: {
+        qrCode: code,
+      },
+    });
+    
+    setIsSubmittingInteraction(false);
+    setInteractionResult(result);
+    
+    if (result.success) {
+      // Show success with points earned
+      setVerifiedEmail('scanned.user@email.com');
+      setFlowState('success');
+      
+      // Reload page to refresh user data
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000);
+    }
   };
 
-  const handleBluetoothConnect = (device: any) => {
+  const handleBluetoothConnect = async (device: any) => {
     console.log('Bluetooth device connected:', device);
-    // Simulate successful verification
-    setVerifiedEmail('bluetooth.user@email.com');
-    setFlowState('exchange_form');
+    
+    if (!user) return;
+    
+    setIsSubmittingInteraction(true);
+    
+    // Submit individual interaction
+    const result = await submitInteraction({
+      userId: user.id,
+      verificationMethod: 'bluetooth',
+      interactionType: 'individual',
+      levelType: 'individual',
+      metadata: {
+        distance: device.distance,
+        deviceId: device.id,
+      },
+    });
+    
+    setIsSubmittingInteraction(false);
+    setInteractionResult(result);
+    
+    if (result.success) {
+      // Show success with points earned
+      setVerifiedEmail('bluetooth.user@email.com');
+      setFlowState('success');
+      
+      // Reload page to refresh user data
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000);
+    }
   };
 
 
@@ -249,6 +307,13 @@ const VerificationHub: React.FC = () => {
       </div>
 
       {/* Content */}
+      {viewMode === 'methods' && flowState === 'success' && interactionResult && !lastExchange && (
+        <InteractionSuccess
+          result={interactionResult}
+          onClose={handleSuccessClose}
+        />
+      )}
+
       {viewMode === 'methods' && flowState === 'success' && lastExchange && (
         <ExchangeSuccess
           pointsEarned={lastExchange.pointsEarned}

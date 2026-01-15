@@ -39,7 +39,7 @@ const authReducer = (state: AuthState, action: AuthAction): AuthState => {
         error: null,
       };
     case 'CLEAR_ERROR':
-      return { ...state, error: null };
+      return { ...state, isLoading: false, error: null };
     default:
       return state;
   }
@@ -403,7 +403,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (!isSupabaseConfigured) {
         await new Promise(resolve => setTimeout(resolve, 1500));
         console.log('Demo mode: Password reset email would be sent to:', email);
-        dispatch({ type: 'AUTH_ERROR', payload: '' });
+        // Clear loading state and error
+        dispatch({ type: 'CLEAR_ERROR' });
         return;
       }
 
@@ -417,8 +418,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         throw new Error('Chyba pri odosielaní e-mailu. Skontrolujte e-mailovú adresu.');
       }
 
-      // Success - clear error state
-      dispatch({ type: 'AUTH_ERROR', payload: '' });
+      // Success - clear loading state and error
+      dispatch({ type: 'CLEAR_ERROR' });
     } catch (error) {
       dispatch({ type: 'AUTH_ERROR', payload: error instanceof Error ? error.message : 'Chyba pri obnovení hesla' });
       throw error;

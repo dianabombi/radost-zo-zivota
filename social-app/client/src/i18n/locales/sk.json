@@ -135,5 +135,21 @@
     "finish": "Dokončiť",
     "search": "Hľadať",
     "filter": "Filtrovať"
+  },
+  "profile": {
+    "level": "Level",
+    "points": "Body",
+    "days": "Dni"
+  },
+  "progression": {
+    "toNextLevel": "Do ďalšieho levelu",
+    "interactions": "interakcií",
+    "communityLevel": "Komunitná Úroveň",
+    "cityLevel": "Mestská Úroveň",
+    "newLevel": "Nová Úroveň",
+    "congratulations": "Gratulujem! Dosiahol si potrebný počet interakcií a odomkol si novú úroveň súťaže"
+  },
+  "quickActions": {
+    "collectPoints": "Zbieraj body a bav sa"
   }
 }
