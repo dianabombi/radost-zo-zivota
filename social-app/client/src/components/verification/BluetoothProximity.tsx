@@ -59,36 +59,28 @@ const BluetoothProximity: React.FC<BluetoothProximityProps> = ({ onDeviceFound }
     try {
       console.log('🔍 Starting Bluetooth scan...');
       
-      // Request Bluetooth device
+      // Request Bluetooth device - accept all devices without requiring specific services
       const device = await navigator.bluetooth.requestDevice({
         acceptAllDevices: true,
-        optionalServices: ['battery_service', 'device_information']
+        optionalServices: [] // Don't require any specific services
       });
 
       console.log('✅ Device found:', device.name);
 
-      // Get GATT server
-      const server = await device.gatt?.connect();
+      // Don't try to connect to GATT server - just use device info
+      // Most phones don't expose GATT services for security reasons
+      const rssi = -60; // Default value (Web Bluetooth API doesn't expose RSSI directly)
       
-      if (server) {
-        // Try to get RSSI (signal strength) - not all devices support this
-        const rssi = -60; // Default value (would need device-specific API to get real RSSI)
-        
-        // Create device object
-        const bluetoothDevice: BluetoothDevice = {
-          id: device.id,
-          name: device.name || 'Neznáme zariadenie',
-          distance: calculateDistance(rssi),
-          rssi: rssi,
-          isInRange: true,
-        };
+      // Create device object
+      const bluetoothDevice: BluetoothDevice = {
+        id: device.id,
+        name: device.name || 'Neznáme zariadenie',
+        distance: calculateDistance(rssi),
+        rssi: rssi,
+        isInRange: true,
+      };
 
-        setDevices([bluetoothDevice]);
-        
-        // Disconnect after getting info
-        server.disconnect();
-      }
-      
+      setDevices([bluetoothDevice]);
       setIsScanning(false);
       
     } catch (err) {
