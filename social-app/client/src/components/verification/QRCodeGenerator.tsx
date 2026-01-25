@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { QRCodeSVG } from 'qrcode.react';
 import type { QRCodeData } from '../../types/verification';
 import Button from '../ui/Button';
 
@@ -78,7 +79,7 @@ const QRCodeGenerator: React.FC<QRCodeGeneratorProps> = ({ userId, onScan }) => 
           <div className="flex flex-col items-center space-y-4">
             {/* QR Code with Screenshot Protection */}
             <div 
-              className="bg-white p-4 rounded-xl relative select-none"
+              className="bg-white p-6 rounded-xl relative select-none"
               style={{ 
                 WebkitUserSelect: 'none',
                 userSelect: 'none',
@@ -86,24 +87,14 @@ const QRCodeGenerator: React.FC<QRCodeGeneratorProps> = ({ userId, onScan }) => 
               }}
               onContextMenu={(e) => e.preventDefault()}
             >
-              <div 
-                className="w-48 h-48 sm:w-64 sm:h-64 bg-gradient-to-br from-electric-blue to-vibrant-green flex items-center justify-center text-white font-poppins font-bold text-center p-4 relative"
-                style={{
-                  filter: 'contrast(1.1)',
-                }}
-              >
-                <div>
-                  <div className="text-4xl mb-2">📱</div>
-                  <div className="text-xs break-all">{qrData.code}</div>
-                </div>
-                {/* Anti-screenshot overlay with moving gradient */}
-                <div 
-                  className="absolute inset-0 pointer-events-none opacity-20 animate-pulse"
-                  style={{
-                    background: 'repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(255,255,255,0.1) 2px, rgba(255,255,255,0.1) 4px)',
-                  }}
-                />
-              </div>
+              <QRCodeSVG
+                value={qrData.code}
+                size={256}
+                level="H"
+                includeMargin={true}
+                bgColor="#ffffff"
+                fgColor="#000000"
+              />
               {/* Screenshot warning watermark */}
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-10">
                 <span className="text-black font-bold text-xs rotate-[-30deg] whitespace-nowrap">

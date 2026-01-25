@@ -116,6 +116,41 @@ const VerificationHub: React.FC = () => {
     
     if (!user) return;
     
+    // Validate and parse QR code format: MEET-{userId}-{timestamp}-{random}
+    const qrParts = code.split('-');
+    if (qrParts.length !== 4 || qrParts[0] !== 'MEET') {
+      setInteractionResult({
+        success: false,
+        message: 'Neplatný QR kód. Skontrolujte formát kódu.',
+        points: 0,
+      });
+      return;
+    }
+    
+    const scannedUserId = qrParts[1];
+    const timestamp = parseInt(qrParts[2]);
+    const expiresAt = timestamp + 5 * 60 * 1000; // 5 minutes
+    
+    // Check if user is scanning their own code
+    if (scannedUserId === user.id) {
+      setInteractionResult({
+        success: false,
+        message: 'Nemôžete naskenovať svoj vlastný QR kód.',
+        points: 0,
+      });
+      return;
+    }
+    
+    // Check if code is expired
+    if (Date.now() > expiresAt) {
+      setInteractionResult({
+        success: false,
+        message: 'QR kód vypršal. Požiadajte o nový kód.',
+        points: 0,
+      });
+      return;
+    }
+    
     // Submit individual interaction
     const result = await submitInteraction({
       userId: user.id,
@@ -124,13 +159,15 @@ const VerificationHub: React.FC = () => {
       levelType: 'individual',
       metadata: {
         qrCode: code,
+        scannedUserId: scannedUserId,
+        timestamp: timestamp,
       },
     });
     setInteractionResult(result);
     
     if (result.success) {
       // Show success with points earned
-      setVerifiedEmail('scanned.user@email.com');
+      setVerifiedEmail(`user-${scannedUserId}@verified.com`);
       setFlowState('success');
       
       // Reload page to refresh user data

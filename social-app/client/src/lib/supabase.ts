@@ -12,7 +12,7 @@ export const supabase = isSupabaseConfigured
       auth: {
         autoRefreshToken: true,
         persistSession: true,
-        detectSessionInUrl: true
+        detectSessionInUrl: false
       }
     })
   : createClient('https://placeholder.supabase.co', 'placeholder-key')

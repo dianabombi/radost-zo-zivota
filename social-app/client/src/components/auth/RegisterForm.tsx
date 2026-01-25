@@ -23,6 +23,8 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSwitchToLogin }) => {
     country: 'Slovakia',
   });
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const validateForm = () => {
     const errors: Record<string, string> = {};
@@ -119,25 +121,45 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSwitchToLogin }) => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
-          <Input
-            label={t('auth.password')}
-            type="password"
-            value={formData.password}
-            onChange={(value) => handleInputChange('password', value)}
-            placeholder="••••••••"
-            required
-            error={formErrors.password}
-          />
+          <div className="relative">
+            <Input
+              label={t('auth.password')}
+              type={showPassword ? "text" : "password"}
+              value={formData.password}
+              onChange={(value) => handleInputChange('password', value)}
+              placeholder="••••••••"
+              required
+              error={formErrors.password}
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-9 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
+              aria-label={showPassword ? "Hide password" : "Show password"}
+            >
+              {showPassword ? '👁️' : '👁️‍🗨️'}
+            </button>
+          </div>
 
-          <Input
-            label={t('auth.confirmPassword')}
-            type="password"
-            value={formData.confirmPassword}
-            onChange={(value) => handleInputChange('confirmPassword', value)}
-            placeholder="••••••••"
-            required
-            error={formErrors.confirmPassword}
-          />
+          <div className="relative">
+            <Input
+              label={t('auth.confirmPassword')}
+              type={showConfirmPassword ? "text" : "password"}
+              value={formData.confirmPassword}
+              onChange={(value) => handleInputChange('confirmPassword', value)}
+              placeholder="••••••••"
+              required
+              error={formErrors.confirmPassword}
+            />
+            <button
+              type="button"
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              className="absolute right-3 top-9 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
+              aria-label={showConfirmPassword ? "Hide password" : "Show password"}
+            >
+              {showConfirmPassword ? '👁️' : '👁️‍🗨️'}
+            </button>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">

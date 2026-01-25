@@ -29,20 +29,12 @@ const DashboardHome: React.FC<DashboardHomeProps> = ({ onNavigate }) => {
       action: () => onNavigate('leaderboard'),
     },
     {
-      id: 'verification',
-      icon: '🤝',
-      title: 'Overenie Blízkosti',
-      description: 'Stretni sa s ľuďmi',
+      id: 'verification-game',
+      icon: '🤝🎮',
+      title: 'Overenie Blízkosti → Hra',
+      description: 'Stretni sa s ľuďmi a zbieraj body',
       gradient: 'from-vibrant-green to-warm-yellow',
       action: () => onNavigate('verification'),
-    },
-    {
-      id: 'game',
-      icon: '🎮',
-      title: 'Hra',
-      description: 'Zbieraj body a bav sa',
-      gradient: 'from-warm-yellow to-electric-blue',
-      action: () => onNavigate('game'),
     },
   ];
 
@@ -123,7 +115,7 @@ const DashboardHome: React.FC<DashboardHomeProps> = ({ onNavigate }) => {
           <span>⚡</span>
           <span>{t('dashboard.quickActions.title')}</span>
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
           {quickActions.map((action) => (
             <button
               key={action.id}

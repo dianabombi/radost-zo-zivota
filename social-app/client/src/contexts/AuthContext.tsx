@@ -179,31 +179,48 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
       }
 
-      // Use real Supabase authentication
-      console.log('Attempting Supabase login...');
+      // Use direct fetch for login (Supabase JS client has timeout issues)
+      console.log('Attempting Supabase login with fetch...');
       
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email: credentials.email,
-        password: credentials.password,
+      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/auth/v1/token?grant_type=password`, {
+        method: 'POST',
+        headers: {
+          'apikey': import.meta.env.VITE_SUPABASE_ANON_KEY,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email: credentials.email,
+          password: credentials.password
+        })
       });
 
-      if (error) {
-        console.error('Supabase login error:', error);
-        const errorMessage = error.message === 'Invalid login credentials' 
-          ? '❌ Nesprávne prihlasovacie údaje.\n\n💡 Nemáte ešte účet? Kliknite na "Zaregistrujte sa" nižšie.' 
-          : error.message === 'Failed to fetch'
-          ? 'Chyba pripojenia k serveru. Skontrolujte pripojenie k internetu.'
-          : error.message;
+      const result = await response.json();
+      console.log('Login response:', response.status);
+
+      if (!response.ok) {
+        console.error('Supabase login error:', result);
+        const errorMessage = result.error_description || result.message || 'Nesprávne prihlasovacie údaje';
         throw new Error(errorMessage);
       }
 
+      const data = { user: result.user, session: result };
+      
       if (data?.user) {
-        // Get user profile from database
-        const { data: profile, error: profileError } = await supabase
-          .from('users')
-          .select('*')
-          .eq('id', data.user.id)
-          .single();
+        // Get user profile from database with direct fetch
+        console.log('📊 Fetching user profile for ID:', data.user.id);
+        
+        const profileResponse = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/rest/v1/users?id=eq.${data.user.id}&select=*`, {
+          headers: {
+            'apikey': import.meta.env.VITE_SUPABASE_ANON_KEY,
+            'Authorization': `Bearer ${result.access_token}`
+          }
+        });
+        
+        const profiles = await profileResponse.json();
+        console.log('✅ Profile fetch completed:', profiles.length, 'profiles found');
+        
+        const profile = profiles[0];
+        const profileError = !profileResponse.ok ? profiles : null;
         
         if (profileError) {
           console.error('Error fetching profile:', profileError);

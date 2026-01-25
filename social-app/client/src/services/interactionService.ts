@@ -12,16 +12,20 @@ export interface InteractionData {
     distance?: number;
     qrCode?: string;
     deviceId?: string;
+    scannedUserId?: string;
+    timestamp?: number;
   };
 }
 
 export interface InteractionResult {
   success: boolean;
-  pointsEarned: number;
-  newTotalPoints: number;
-  newLevel: number;
+  pointsEarned?: number;
+  newTotalPoints?: number;
+  newLevel?: number;
   interactionId?: string;
   error?: string;
+  message?: string;
+  points?: number;
 }
 
 // Point calculation based on level and interaction type
@@ -103,7 +107,7 @@ export const submitInteraction = async (data: InteractionData): Promise<Interact
     }
     
     // Real Supabase implementation
-    // 1. Create interaction record
+    // 1. Create interaction record for scanner
     const { data: interaction, error: interactionError } = await supabase
       .from('interactions')
       .insert({
@@ -120,6 +124,46 @@ export const submitInteraction = async (data: InteractionData): Promise<Interact
     if (interactionError) {
       console.error('Error creating interaction:', interactionError);
       throw new Error('Failed to create interaction record');
+    }
+    
+    // 1b. If there's a scanned user (from QR code), create interaction for them too
+    if (data.metadata?.scannedUserId) {
+      const { error: partnerInteractionError } = await supabase
+        .from('interactions')
+        .insert({
+          user_id: data.metadata.scannedUserId,
+          group_id: null,
+          interaction_type: data.interactionType,
+          points_earned: pointsEarned,
+          level_type: data.levelType,
+          created_at: new Date().toISOString(),
+        });
+      
+      if (partnerInteractionError) {
+        console.error('Error creating partner interaction:', partnerInteractionError);
+        // Don't throw - continue with scanner's interaction
+      }
+      
+      // Update partner's points too
+      const { data: partnerUser } = await supabase
+        .from('users')
+        .select('points, level')
+        .eq('id', data.metadata.scannedUserId)
+        .single();
+      
+      if (partnerUser) {
+        const partnerNewPoints = (partnerUser.points || 0) + pointsEarned;
+        const partnerNewLevel = calculateLevel(partnerNewPoints);
+        
+        await supabase
+          .from('users')
+          .update({
+            points: partnerNewPoints,
+            level: partnerNewLevel,
+            updated_at: new Date().toISOString(),
+          })
+          .eq('id', data.metadata.scannedUserId);
+      }
     }
     
     // 2. Get current user points

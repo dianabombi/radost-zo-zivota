@@ -19,6 +19,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister }) => {
   });
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
   const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const validateForm = () => {
     const errors: Record<string, string> = {};
@@ -88,15 +89,25 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister }) => {
           error={formErrors.email}
         />
 
-        <Input
-          label={t('auth.password')}
-          type="password"
-          value={formData.password}
-          onChange={(value) => handleInputChange('password', value)}
-          placeholder="••••••••"
-          required
-          error={formErrors.password}
-        />
+        <div className="relative">
+          <Input
+            label={t('auth.password')}
+            type={showPassword ? "text" : "password"}
+            value={formData.password}
+            onChange={(value) => handleInputChange('password', value)}
+            placeholder="••••••••"
+            required
+            error={formErrors.password}
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute right-3 top-9 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
+            aria-label={showPassword ? "Hide password" : "Show password"}
+          >
+            {showPassword ? '👁️' : '👁️‍🗨️'}
+          </button>
+        </div>
 
         {error && (
           <div className="bg-red-900 bg-opacity-20 border border-red-500 rounded-lg sm:rounded-xl p-3 sm:p-4">
