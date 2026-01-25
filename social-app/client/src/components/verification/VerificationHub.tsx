@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import type { MeetingRequest, Connection, VerificationMethod } from '../../types/verification';
 import type { ExchangeFormData, Exchange } from '../../types/exchange';
 import QRCodeGenerator from './QRCodeGenerator';
@@ -13,6 +13,13 @@ import Button from '../ui/Button';
 import { useAuth } from '../../contexts/AuthContext';
 import { submitInteraction } from '../../services/interactionService';
 import type { InteractionResult } from '../../services/interactionService';
+import { 
+  getPendingRequests, 
+  confirmMeetingRequest, 
+  rejectMeetingRequest,
+  subscribeToPendingRequests 
+} from '../../services/meetingRequestService';
+import type { MeetingRequest as DBMeetingRequest } from '../../services/meetingRequestService';
 
 type ViewMode = 'methods' | 'pending' | 'history' | 'exchanges';
 type FlowState = 'select_method' | 'verifying' | 'exchange_form' | 'success';
@@ -25,8 +32,65 @@ const VerificationHub: React.FC = () => {
   const [verifiedEmail, setVerifiedEmail] = useState<string>('');
   const [lastExchange, setLastExchange] = useState<Exchange | null>(null);
   const [interactionResult, setInteractionResult] = useState<InteractionResult | null>(null);
+  const [pendingRequests, setPendingRequests] = useState<MeetingRequest[]>([]);
+  const [isLoadingRequests, setIsLoadingRequests] = useState(false);
 
-  // Mock data - replace with real API calls later
+  // Fetch pending requests on mount and subscribe to real-time updates
+  useEffect(() => {
+    if (!user?.id) return;
+
+    const fetchRequests = async () => {
+      setIsLoadingRequests(true);
+      const requests = await getPendingRequests(user.id);
+      
+      // Convert DB format to component format
+      const formattedRequests: MeetingRequest[] = requests.map((req: DBMeetingRequest) => ({
+        id: req.id,
+        fromUserId: req.from_user_id,
+        fromUserName: req.from_user?.nickname || 'Unknown User',
+        fromUserEmail: req.from_user?.email || '',
+        toUserId: req.to_user_id,
+        toUserName: user.nickname || '',
+        toUserEmail: user.email,
+        method: req.method,
+        status: req.status,
+        requestedAt: req.created_at,
+        expiresAt: req.expires_at,
+        metadata: req.metadata ? { distance: req.distance } : undefined,
+      }));
+      
+      setPendingRequests(formattedRequests);
+      setIsLoadingRequests(false);
+    };
+
+    fetchRequests();
+
+    // Subscribe to real-time updates
+    const unsubscribe = subscribeToPendingRequests(user.id, (requests) => {
+      const formattedRequests: MeetingRequest[] = requests.map((req: DBMeetingRequest) => ({
+        id: req.id,
+        fromUserId: req.from_user_id,
+        fromUserName: req.from_user?.nickname || 'Unknown User',
+        fromUserEmail: req.from_user?.email || '',
+        toUserId: req.to_user_id,
+        toUserName: user.nickname || '',
+        toUserEmail: user.email,
+        method: req.method,
+        status: req.status,
+        requestedAt: req.created_at,
+        expiresAt: req.expires_at,
+        metadata: req.metadata ? { distance: req.distance } : undefined,
+      }));
+      
+      setPendingRequests(formattedRequests);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, [user?.id, user?.nickname, user?.email]);
+
+  // Mock data for demo fallback
   const mockPendingRequests: MeetingRequest[] = [
     {
       id: 'req-1',
@@ -84,14 +148,36 @@ const VerificationHub: React.FC = () => {
     },
   ];
 
-  const handleConfirmRequest = (requestId: string) => {
+  const handleConfirmRequest = async (requestId: string) => {
     console.log('Confirming request:', requestId);
-    // TODO: API call to confirm meeting
+    
+    const result = await confirmMeetingRequest(requestId);
+    
+    if (result.success) {
+      // Remove from pending list
+      setPendingRequests(prev => prev.filter(req => req.id !== requestId));
+      
+      // TODO: Create interaction record and award points
+      console.log('Meeting request confirmed successfully');
+    } else {
+      console.error('Failed to confirm request:', result.error);
+      alert(result.error || 'Nepodarilo sa potvrdiť žiadosť');
+    }
   };
 
-  const handleRejectRequest = (requestId: string) => {
+  const handleRejectRequest = async (requestId: string) => {
     console.log('Rejecting request:', requestId);
-    // TODO: API call to reject meeting
+    
+    const result = await rejectMeetingRequest(requestId);
+    
+    if (result.success) {
+      // Remove from pending list
+      setPendingRequests(prev => prev.filter(req => req.id !== requestId));
+      console.log('Meeting request rejected successfully');
+    } else {
+      console.error('Failed to reject request:', result.error);
+      alert(result.error || 'Nepodarilo sa odmietnuť žiadosť');
+    }
   };
 
   const mockExchanges: Exchange[] = [
@@ -309,10 +395,10 @@ const VerificationHub: React.FC = () => {
           className="text-sm whitespace-nowrap relative"
           glow={viewMode === 'pending'}
         >
-          📬 Čakajúce ({mockPendingRequests.length})
-          {mockPendingRequests.length > 0 && (
+          📬 Čakajúce ({pendingRequests.length})
+          {pendingRequests.length > 0 && (
             <span className="absolute -top-1 -right-1 w-5 h-5 bg-warm-yellow rounded-full text-charcoal text-xs font-bold flex items-center justify-center">
-              {mockPendingRequests.length}
+              {pendingRequests.length}
             </span>
           )}
         </Button>
@@ -426,7 +512,7 @@ const VerificationHub: React.FC = () => {
 
       {viewMode === 'pending' && (
         <PendingRequests
-          requests={mockPendingRequests}
+          requests={pendingRequests}
           onConfirm={handleConfirmRequest}
           onReject={handleRejectRequest}
         />
