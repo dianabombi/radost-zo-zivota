@@ -15,7 +15,7 @@ const ExchangeSuccess: React.FC<ExchangeSuccessProps> = ({
   onViewHistory,
 }) => {
   return (
-    <div className="bg-gradient-to-r from-vibrant-green to-warm-yellow p-[2px] rounded-xl sm:rounded-2xl">
+    <div className="bg-gradient-to-r from-vibrant-green to-light-magenta dark:to-warm-yellow p-[2px] rounded-xl sm:rounded-2xl">
       <div className="bg-charcoal rounded-xl sm:rounded-2xl p-6 sm:p-8">
         <div className="text-center space-y-6">
           {/* Success Animation */}
@@ -28,7 +28,7 @@ const ExchangeSuccess: React.FC<ExchangeSuccessProps> = ({
 
           {/* Success Message */}
           <div>
-            <h3 className="text-2xl sm:text-3xl font-poppins font-bold text-transparent bg-gradient-to-r from-vibrant-green to-warm-yellow bg-clip-text mb-2">
+            <h3 className="text-2xl sm:text-3xl font-poppins font-bold text-transparent bg-gradient-to-r from-vibrant-green to-light-magenta dark:to-warm-yellow bg-clip-text mb-2">
               Výmena Zaznamenaná!
             </h3>
             <p className="text-gray-300 font-poppins text-sm sm:text-base">
@@ -41,7 +41,7 @@ const ExchangeSuccess: React.FC<ExchangeSuccessProps> = ({
             <p className="text-gray-300 font-poppins text-sm mb-2">
               Získané body:
             </p>
-            <div className="text-5xl sm:text-6xl font-poppins font-bold text-transparent bg-gradient-to-r from-vibrant-green to-warm-yellow bg-clip-text">
+            <div className="text-5xl sm:text-6xl font-poppins font-bold text-transparent bg-gradient-to-r from-vibrant-green to-light-magenta dark:to-warm-yellow bg-clip-text">
               +{pointsEarned}
             </div>
           </div>
@@ -62,7 +62,7 @@ const ExchangeSuccess: React.FC<ExchangeSuccessProps> = ({
             </div>
             <div className="bg-charcoal-light rounded-lg p-3">
               <div className="text-2xl mb-1">🤝</div>
-              <div className="text-warm-yellow font-poppins font-bold text-sm">
+              <div className="text-light-magenta dark:text-warm-yellow font-poppins font-bold text-sm">
                 Spojenie
               </div>
             </div>

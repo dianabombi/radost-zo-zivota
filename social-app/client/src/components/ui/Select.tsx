@@ -30,7 +30,7 @@ const Select: React.FC<SelectProps> = ({
     <div className={`space-y-1.5 sm:space-y-2 ${className}`}>
       <label className="block text-xs sm:text-sm font-poppins font-semibold text-light-text dark:text-gray-300 text-left">
         {label}
-        {required && <span className="text-warm-yellow ml-1">*</span>}
+        {required && <span className="text-light-magenta dark:text-warm-yellow ml-1">*</span>}
       </label>
       
       <select

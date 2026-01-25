@@ -397,7 +397,7 @@ const VerificationHub: React.FC = () => {
         >
           📬 Čakajúce ({pendingRequests.length})
           {pendingRequests.length > 0 && (
-            <span className="absolute -top-1 -right-1 w-5 h-5 bg-warm-yellow rounded-full text-charcoal text-xs font-bold flex items-center justify-center">
+            <span className="absolute -top-1 -right-1 w-5 h-5 bg-light-magenta dark:bg-warm-yellow rounded-full text-charcoal text-xs font-bold flex items-center justify-center">
               {pendingRequests.length}
             </span>
           )}

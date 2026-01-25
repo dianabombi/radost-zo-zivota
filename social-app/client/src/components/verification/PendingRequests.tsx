@@ -74,7 +74,7 @@ const PendingRequests: React.FC<PendingRequestsProps> = ({
         {requests.map((request) => (
           <div
             key={request.id}
-            className="bg-white dark:bg-charcoal-light border-2 border-light-blue dark:border-warm-yellow rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg shadow-blue-100 dark:shadow-neon-yellow hover:shadow-xl transition-all duration-300"
+            className="bg-white dark:bg-charcoal-light border-2 border-light-blue dark:border-light-magenta dark:border-warm-yellow rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg shadow-blue-100 dark:shadow-light-magenta-soft dark:shadow-neon-yellow hover:shadow-xl transition-all duration-300"
           >
             <div className="flex items-start gap-4">
               {/* Avatar */}

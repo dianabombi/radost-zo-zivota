@@ -72,8 +72,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister }) => {
 
       <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
         {!isSupabaseConfigured && (
-          <div className="bg-warm-yellow bg-opacity-10 border border-warm-yellow rounded-lg sm:rounded-xl p-3 sm:p-4">
-            <p className="text-warm-yellow font-poppins text-xs sm:text-sm text-center">
+          <div className="bg-light-magenta dark:bg-warm-yellow bg-opacity-10 border border-light-magenta dark:border-warm-yellow rounded-lg sm:rounded-xl p-3 sm:p-4">
+            <p className="text-light-magenta dark:text-warm-yellow font-poppins text-xs sm:text-sm text-center">
               <strong>🔧 Demo mód:</strong> Supabase nie je nakonfigurovaný. Použite ľubovoľný e-mail a heslo (min. 6 znakov).
             </p>
           </div>
@@ -141,7 +141,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister }) => {
             <button
               type="button"
               onClick={onSwitchToRegister}
-              className="text-vibrant-green hover:text-warm-yellow transition-colors duration-300 font-semibold"
+              className="text-vibrant-green hover:text-light-magenta dark:text-warm-yellow transition-colors duration-300 font-semibold"
             >
               {t('auth.register')}
             </button>

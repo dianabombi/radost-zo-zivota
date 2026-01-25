@@ -81,7 +81,7 @@ const ExchangeForm: React.FC<ExchangeFormProps> = ({
       {/* Header */}
       <div className="text-center mb-6">
         <div className="text-5xl mb-3">✅</div>
-        <h3 className="text-2xl sm:text-3xl font-poppins font-bold text-transparent bg-gradient-to-r from-vibrant-green to-warm-yellow bg-clip-text mb-2">
+        <h3 className="text-2xl sm:text-3xl font-poppins font-bold text-transparent bg-gradient-to-r from-vibrant-green to-light-magenta dark:to-warm-yellow bg-clip-text mb-2">
           Blízkosť Overená!
         </h3>
         <div className="flex items-center justify-center gap-2 text-sm text-gray-300 font-poppins">
@@ -102,7 +102,7 @@ const ExchangeForm: React.FC<ExchangeFormProps> = ({
         {/* Step 1: Partner Email */}
         <div className="bg-charcoal rounded-lg p-4">
           <div className="flex items-center gap-2 mb-3">
-            <span className="text-warm-yellow font-poppins font-bold text-lg">1.</span>
+            <span className="text-light-magenta dark:text-warm-yellow font-poppins font-bold text-lg">1.</span>
             <h4 className="text-white font-poppins font-semibold text-sm sm:text-base">
               E-mail kolegu
             </h4>
@@ -122,7 +122,7 @@ const ExchangeForm: React.FC<ExchangeFormProps> = ({
         {/* Step 2: What I Gave */}
         <div className="bg-charcoal rounded-lg p-4">
           <div className="flex items-center gap-2 mb-3">
-            <span className="text-warm-yellow font-poppins font-bold text-lg">2.</span>
+            <span className="text-light-magenta dark:text-warm-yellow font-poppins font-bold text-lg">2.</span>
             <h4 className="text-white font-poppins font-semibold text-sm sm:text-base">
               Čo som dal/a
             </h4>
@@ -153,7 +153,7 @@ const ExchangeForm: React.FC<ExchangeFormProps> = ({
         {/* Step 3: What I Received */}
         <div className="bg-charcoal rounded-lg p-4">
           <div className="flex items-center gap-2 mb-3">
-            <span className="text-warm-yellow font-poppins font-bold text-lg">3.</span>
+            <span className="text-light-magenta dark:text-warm-yellow font-poppins font-bold text-lg">3.</span>
             <h4 className="text-white font-poppins font-semibold text-sm sm:text-base">
               Čo som dostal/a
             </h4>
@@ -182,12 +182,12 @@ const ExchangeForm: React.FC<ExchangeFormProps> = ({
         </div>
 
         {/* Points Preview */}
-        <div className="bg-gradient-to-r from-vibrant-green to-warm-yellow p-[2px] rounded-lg">
+        <div className="bg-gradient-to-r from-vibrant-green to-light-magenta dark:to-warm-yellow p-[2px] rounded-lg">
           <div className="bg-charcoal rounded-lg p-4 text-center">
             <p className="text-gray-300 font-poppins text-sm mb-2">
               Získaš za túto výmenu:
             </p>
-            <div className="text-4xl font-poppins font-bold text-transparent bg-gradient-to-r from-vibrant-green to-warm-yellow bg-clip-text">
+            <div className="text-4xl font-poppins font-bold text-transparent bg-gradient-to-r from-vibrant-green to-light-magenta dark:to-warm-yellow bg-clip-text">
               +50 bodov
             </div>
           </div>

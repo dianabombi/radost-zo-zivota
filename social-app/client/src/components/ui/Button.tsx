@@ -27,7 +27,7 @@ const Button: React.FC<ButtonProps> = ({
     primary: 'bg-electric-blue border-electric-blue text-text-white hover:shadow-neon-blue hover:bg-opacity-90',
     secondary: 'bg-charcoal-light border-electric-blue text-electric-blue hover:bg-electric-blue hover:text-text-white hover:shadow-neon-blue',
     success: 'bg-vibrant-green border-vibrant-green text-deep-charcoal hover:shadow-neon-green hover:bg-opacity-90',
-    warning: 'bg-warm-yellow border-warm-yellow text-deep-charcoal hover:shadow-neon-yellow hover:bg-opacity-90',
+    warning: 'bg-light-magenta dark:bg-warm-yellow border-light-magenta dark:border-warm-yellow text-deep-charcoal hover:shadow-light-magenta-soft dark:shadow-neon-yellow hover:bg-opacity-90',
     outline: 'bg-transparent border-vibrant-green text-vibrant-green hover:bg-vibrant-green hover:text-deep-charcoal hover:shadow-neon-green',
   };
   

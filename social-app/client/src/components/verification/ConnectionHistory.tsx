@@ -93,7 +93,7 @@ const ConnectionHistory: React.FC<ConnectionHistoryProps> = ({ connections }) =>
                 </div>
               </div>
               <div className="text-center bg-light-bg dark:bg-charcoal rounded-lg p-2">
-                <div className="text-warm-yellow font-poppins font-bold text-base sm:text-lg">
+                <div className="text-light-magenta dark:text-warm-yellow font-poppins font-bold text-base sm:text-lg">
                   {connection.points}
                 </div>
                 <div className="text-light-text-secondary dark:text-gray-400 font-poppins text-xs">

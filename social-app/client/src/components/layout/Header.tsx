@@ -74,7 +74,7 @@ const Header: React.FC<HeaderProps> = ({
             />
             {/* Title below logo */}
             <div className="text-left">
-              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-poppins font-black text-transparent bg-gradient-to-r from-electric-blue via-vibrant-green to-warm-yellow bg-clip-text mb-1 sm:mb-2 leading-tight">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-poppins font-black text-transparent bg-gradient-to-r from-electric-blue via-vibrant-green to-light-magenta dark:to-warm-yellow bg-clip-text mb-1 sm:mb-2 leading-tight">
                 Hra na radosť<br />zo života
               </h1>
               <p className="text-light-text-secondary dark:text-gray-300 font-poppins text-sm sm:text-base md:text-lg opacity-90 tracking-wide mt-2">
@@ -88,7 +88,7 @@ const Header: React.FC<HeaderProps> = ({
         {user && (
           <div className="flex-shrink-0 order-2 w-full lg:w-auto text-center">
             <p className="font-poppins text-lg sm:text-xl md:text-2xl text-electric-blue dark:text-vibrant-green mb-2">
-              Vitaj späť, <span className="font-bold text-warm-yellow">{user.nickname}</span>! 👋
+              Vitaj späť, <span className="font-bold text-light-magenta dark:text-warm-yellow">{user.nickname}</span>! 👋
             </p>
             <p className="font-poppins text-sm sm:text-base md:text-lg text-light-text-secondary dark:text-gray-300 opacity-80">
               Pripravený na ďalšie dobrodružstvo?
@@ -99,13 +99,13 @@ const Header: React.FC<HeaderProps> = ({
         {/* User Profile - Right */}
         {user && (
           <div className="flex-shrink-0 order-3 w-full lg:w-auto">
-            <div className="bg-light-surface dark:bg-charcoal-light border-2 border-warm-yellow rounded-xl sm:rounded-2xl p-3 sm:p-4 shadow-neon-yellow w-full lg:min-w-[280px]">
+            <div className="bg-light-surface dark:bg-charcoal-light border-2 border-light-magenta dark:border-warm-yellow rounded-xl sm:rounded-2xl p-3 sm:p-4 shadow-light-magenta-soft dark:shadow-neon-yellow w-full lg:min-w-[280px]">
               {/* Language Switcher & Theme Toggle */}
               <div className="flex justify-end items-center gap-2 mb-3">
                 <LanguageSwitcher />
                 <button
                   onClick={toggleTheme}
-                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center transition-all duration-300 bg-electric-blue dark:bg-warm-yellow text-white dark:text-deep-charcoal hover:bg-opacity-80 text-base shadow-lg"
+                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center transition-all duration-300 bg-electric-blue dark:bg-light-magenta dark:bg-warm-yellow text-white dark:text-deep-charcoal hover:bg-opacity-80 text-base shadow-lg"
                   aria-label="Toggle theme"
                 >
                   <span className="hidden dark:inline">☀️</span>
@@ -114,11 +114,11 @@ const Header: React.FC<HeaderProps> = ({
               </div>
 
               <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-electric-blue to-vibrant-green rounded-full flex items-center justify-center text-lg sm:text-xl font-bold text-white flex-shrink-0 ring-2 ring-warm-yellow ring-offset-2 ring-offset-charcoal-light">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-electric-blue to-vibrant-green rounded-full flex items-center justify-center text-lg sm:text-xl font-bold text-white flex-shrink-0 ring-2 ring-light-magenta dark:ring-warm-yellow ring-offset-2 ring-offset-charcoal-light">
                   {user.nickname.charAt(0).toUpperCase()}
                 </div>
                 <div>
-                  <h3 className="text-sm sm:text-base font-poppins font-bold text-warm-yellow">
+                  <h3 className="text-sm sm:text-base font-poppins font-bold text-light-magenta dark:text-warm-yellow">
                     {user.nickname}
                   </h3>
                   <p className="font-poppins text-xs text-light-text-secondary dark:text-gray-300">
@@ -142,7 +142,7 @@ const Header: React.FC<HeaderProps> = ({
                   <div className="text-xs font-poppins text-light-text-secondary dark:text-gray-300">Body</div>
                 </div>
                 <div className="bg-light-bg dark:bg-deep-charcoal rounded-lg p-2">
-                  <div className="text-warm-yellow font-bold text-lg">0</div>
+                  <div className="text-light-magenta dark:text-warm-yellow font-bold text-lg">0</div>
                   <div className="text-xs font-poppins text-light-text-secondary dark:text-gray-300">Dní</div>
                 </div>
               </div>

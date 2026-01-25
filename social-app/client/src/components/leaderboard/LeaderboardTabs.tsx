@@ -55,7 +55,7 @@ const LeaderboardTabs: React.FC<LeaderboardTabsProps> = ({ activeTab, onTabChang
             </span>
             <span>{tab.label}</span>
             {!isUnlocked && (
-              <span className="absolute -top-1 -right-1 bg-warm-yellow text-charcoal text-[10px] font-bold px-1.5 py-0.5 rounded-full">
+              <span className="absolute -top-1 -right-1 bg-light-magenta dark:bg-warm-yellow text-charcoal text-[10px] font-bold px-1.5 py-0.5 rounded-full">
                 {requiredInteractions}
               </span>
             )}

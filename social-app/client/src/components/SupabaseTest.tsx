@@ -72,8 +72,8 @@ const SupabaseTest: React.FC = () => {
   };
 
   return (
-    <div className="bg-charcoal-light border-2 border-warm-yellow rounded-2xl p-6 max-w-2xl mx-auto">
-      <h2 className="text-2xl font-poppins font-bold text-warm-yellow mb-4">
+    <div className="bg-charcoal-light border-2 border-light-magenta dark:border-warm-yellow rounded-2xl p-6 max-w-2xl mx-auto">
+      <h2 className="text-2xl font-poppins font-bold text-light-magenta dark:text-warm-yellow mb-4">
         🔧 Supabase Connection Test
       </h2>
       

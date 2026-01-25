@@ -36,7 +36,7 @@ const UserRankingCard: React.FC<UserRankingCardProps> = ({ ranking }) => {
 
           <div className="text-center">
             <div className="text-xs sm:text-sm text-gray-400 font-poppins mb-1">Percentil</div>
-            <div className="text-lg sm:text-xl font-poppins font-bold text-warm-yellow">
+            <div className="text-lg sm:text-xl font-poppins font-bold text-light-magenta dark:text-warm-yellow">
               {ranking.percentile.toFixed(1)}%
             </div>
           </div>

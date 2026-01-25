@@ -33,7 +33,7 @@ const DashboardHome: React.FC<DashboardHomeProps> = ({ onNavigate }) => {
       icon: '🤝🎮',
       title: 'Overenie Blízkosti → Hra',
       description: 'Stretni sa s ľuďmi a zbieraj body',
-      gradient: 'from-vibrant-green to-warm-yellow',
+      gradient: 'from-vibrant-green to-light-magenta dark:to-warm-yellow',
       action: () => onNavigate('verification'),
     },
   ];
@@ -41,13 +41,13 @@ const DashboardHome: React.FC<DashboardHomeProps> = ({ onNavigate }) => {
   return (
     <div className="space-y-4 sm:space-y-8 -mx-1 sm:mx-0">
       {/* Welcome Hero Section */}
-      <div className="relative overflow-hidden bg-gradient-to-br from-electric-blue via-vibrant-green to-warm-yellow p-[2px] sm:p-[3px] rounded-xl sm:rounded-3xl">
+      <div className="relative overflow-hidden bg-gradient-to-br from-electric-blue via-vibrant-green to-light-magenta dark:to-warm-yellow p-[2px] sm:p-[3px] rounded-xl sm:rounded-3xl">
         <div className="bg-white dark:bg-deep-charcoal rounded-xl sm:rounded-3xl p-4 sm:p-8 md:p-10 relative overflow-hidden">
           {/* Animated Background Pattern */}
           <div className="absolute inset-0 opacity-10">
             <div className="absolute top-0 left-0 w-64 h-64 bg-electric-blue rounded-full blur-3xl animate-pulse"></div>
             <div className="absolute bottom-0 right-0 w-64 h-64 bg-vibrant-green rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-warm-yellow rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-light-magenta dark:bg-warm-yellow rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
           </div>
 
           <div className="relative z-10">
@@ -80,11 +80,11 @@ const DashboardHome: React.FC<DashboardHomeProps> = ({ onNavigate }) => {
               </div>
 
               {/* Rank */}
-              <div className="bg-white dark:bg-charcoal-light border-2 border-light-blue dark:border-warm-yellow rounded-xl p-4 hover:shadow-lg hover:shadow-blue-200 dark:hover:shadow-neon-yellow transition-all duration-300 group">
+              <div className="bg-white dark:bg-charcoal-light border-2 border-light-blue dark:border-light-magenta dark:border-warm-yellow rounded-xl p-4 hover:shadow-lg hover:shadow-blue-200 dark:hover:shadow-light-magenta-soft dark:shadow-neon-yellow transition-all duration-300 group">
                 <div className="text-3xl sm:text-4xl mb-2 group-hover:scale-110 transition-transform">
                   🏆
                 </div>
-                <div className="text-2xl sm:text-3xl font-poppins font-bold text-warm-yellow">
+                <div className="text-2xl sm:text-3xl font-poppins font-bold text-light-magenta dark:text-warm-yellow">
                   #{stats.rank}
                 </div>
                 <div className="text-gray-400 font-poppins text-xs sm:text-sm">
@@ -146,7 +146,7 @@ const DashboardHome: React.FC<DashboardHomeProps> = ({ onNavigate }) => {
       </div>
 
       {/* Progress to Next Level */}
-      <div className="bg-white dark:bg-charcoal-light border-2 border-warm-yellow rounded-lg sm:rounded-2xl p-4 sm:p-8">
+      <div className="bg-white dark:bg-charcoal-light border-2 border-light-magenta dark:border-warm-yellow rounded-lg sm:rounded-2xl p-4 sm:p-8">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg sm:text-xl font-poppins font-bold text-light-text dark:text-white">
             🎯 Progres do ďalšieho levelu
@@ -158,7 +158,7 @@ const DashboardHome: React.FC<DashboardHomeProps> = ({ onNavigate }) => {
         
         <div className="bg-light-bg dark:bg-deep-charcoal rounded-full h-4 sm:h-6 overflow-hidden mb-3">
           <div
-            className="h-full bg-gradient-to-r from-vibrant-green to-warm-yellow transition-all duration-1000 relative overflow-hidden"
+            className="h-full bg-gradient-to-r from-vibrant-green to-light-magenta dark:to-warm-yellow transition-all duration-1000 relative overflow-hidden"
             style={{ width: '50%' }}
           >
             <div className="absolute inset-0 bg-white opacity-20 animate-pulse"></div>
@@ -218,7 +218,7 @@ const DashboardHome: React.FC<DashboardHomeProps> = ({ onNavigate }) => {
             onClick={() => onNavigate('gdpr')}
             className="group relative overflow-hidden bg-white dark:bg-charcoal-light border-2 border-vibrant-green rounded-lg sm:rounded-xl p-6 hover:shadow-neon-green transition-all duration-300 text-left"
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-vibrant-green to-warm-yellow opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-vibrant-green to-light-magenta dark:to-warm-yellow opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
             
             <div className="relative z-10">
               <div className="text-4xl mb-3 group-hover:scale-110 transition-transform">
@@ -230,7 +230,7 @@ const DashboardHome: React.FC<DashboardHomeProps> = ({ onNavigate }) => {
               <p className="text-light-text-secondary dark:text-gray-400 font-poppins text-sm mb-3">
                 Vaše práva a ochrana údajov
               </p>
-              <div className="flex items-center gap-2 text-vibrant-green font-poppins font-semibold text-sm group-hover:text-warm-yellow transition-colors">
+              <div className="flex items-center gap-2 text-vibrant-green font-poppins font-semibold text-sm group-hover:text-light-magenta dark:text-warm-yellow transition-colors">
                 <span>Zobraziť</span>
                 <span className="group-hover:translate-x-1 transition-transform">→</span>
               </div>

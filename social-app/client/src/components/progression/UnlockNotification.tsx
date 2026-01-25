@@ -35,7 +35,7 @@ const UnlockNotification: React.FC<UnlockNotificationProps> = ({
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4">
-      <div className="bg-gradient-to-r from-warm-yellow to-vibrant-green p-[3px] rounded-2xl max-w-md w-full animate-pulse-slow">
+      <div className="bg-gradient-to-r from-light-magenta dark:from-warm-yellow to-vibrant-green p-[3px] rounded-2xl max-w-md w-full animate-pulse-slow">
         <div className="bg-charcoal rounded-2xl p-6 sm:p-8">
           <div className="text-center space-y-6">
             {/* Unlock Animation */}
@@ -44,14 +44,14 @@ const UnlockNotification: React.FC<UnlockNotificationProps> = ({
                 {getCompetitionIcon()}
               </div>
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-32 h-32 bg-warm-yellow opacity-20 rounded-full animate-ping"></div>
+                <div className="w-32 h-32 bg-light-magenta dark:bg-warm-yellow opacity-20 rounded-full animate-ping"></div>
               </div>
             </div>
 
             {/* Unlock Message */}
             <div>
               <div className="text-4xl sm:text-5xl mb-3">🔓</div>
-              <h3 className="text-2xl sm:text-3xl font-poppins font-bold text-transparent bg-gradient-to-r from-warm-yellow to-vibrant-green bg-clip-text mb-2">
+              <h3 className="text-2xl sm:text-3xl font-poppins font-bold text-transparent bg-gradient-to-r from-light-magenta dark:from-warm-yellow to-vibrant-green bg-clip-text mb-2">
                 Nová Súťaž Odomknutá!
               </h3>
               <p className="text-white font-poppins text-lg sm:text-xl font-semibold mb-2">
@@ -63,7 +63,7 @@ const UnlockNotification: React.FC<UnlockNotificationProps> = ({
             </div>
 
             {/* Rewards */}
-            <div className="bg-white dark:bg-charcoal-light border-2 border-light-blue dark:border-warm-yellow rounded-xl p-4">
+            <div className="bg-white dark:bg-charcoal-light border-2 border-light-blue dark:border-light-magenta dark:border-warm-yellow rounded-xl p-4">
               <p className="text-light-text-secondary dark:text-gray-300 font-poppins text-sm mb-3">
                 Odmeny za odomknutie:
               </p>
@@ -80,7 +80,7 @@ const UnlockNotification: React.FC<UnlockNotificationProps> = ({
                 {badge && (
                   <div className="bg-charcoal rounded-lg p-3">
                     <div className="text-2xl mb-1">{badge}</div>
-                    <div className="text-warm-yellow font-poppins font-bold text-sm">
+                    <div className="text-light-magenta dark:text-warm-yellow font-poppins font-bold text-sm">
                       Nový odznak
                     </div>
                   </div>
@@ -108,7 +108,7 @@ const UnlockNotification: React.FC<UnlockNotificationProps> = ({
             </div>
 
             {/* Motivational Message */}
-            <div className="pt-4 border-t border-warm-yellow border-opacity-20">
+            <div className="pt-4 border-t border-light-magenta dark:border-warm-yellow border-opacity-20">
               <p className="text-gray-400 font-poppins text-xs sm:text-sm">
                 🎯 Pokračuj v zbieraní interakcií a odomkni ďalšie súťaže!
               </p>

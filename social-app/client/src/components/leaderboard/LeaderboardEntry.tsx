@@ -8,7 +8,7 @@ interface LeaderboardEntryProps {
 
 const LeaderboardEntry: React.FC<LeaderboardEntryProps> = ({ entry, isCurrentUser }) => {
   const getRankColor = (rank: number) => {
-    if (rank === 1) return 'text-warm-yellow';
+    if (rank === 1) return 'text-light-magenta dark:text-warm-yellow';
     if (rank === 2) return 'text-gray-300';
     if (rank === 3) return 'text-orange-400';
     return 'text-electric-blue';
@@ -24,7 +24,7 @@ const LeaderboardEntry: React.FC<LeaderboardEntryProps> = ({ entry, isCurrentUse
   return (
     <div
       className={`bg-white dark:bg-charcoal-light border-2 ${
-        isCurrentUser ? 'border-warm-yellow shadow-neon-yellow' : 'border-electric-blue'
+        isCurrentUser ? 'border-light-magenta dark:border-warm-yellow shadow-light-magenta-soft dark:shadow-neon-yellow' : 'border-electric-blue'
       } rounded-xl sm:rounded-2xl p-3 sm:p-4 hover:shadow-neon-blue transition-all duration-300 flex items-center gap-3 sm:gap-4`}
     >
       {/* Rank */}

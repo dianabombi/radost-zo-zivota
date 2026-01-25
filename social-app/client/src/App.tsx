@@ -27,10 +27,10 @@ function App() {
   // Show loading state
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-deep-charcoal flex items-center justify-center">
+      <div className="min-h-screen bg-light-bg dark:bg-deep-charcoal flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin text-6xl mb-4">⚡</div>
-          <p className="text-gray-300 font-poppins text-xl">Načítava sa...</p>
+          <p className="text-light-text-secondary dark:text-gray-300 font-poppins text-xl">Načítava sa...</p>
         </div>
       </div>
     )
@@ -75,7 +75,7 @@ function App() {
           {/* Background Pattern */}
           <div className="absolute inset-0 opacity-5">
             <div className="absolute top-10 left-10 w-32 h-32 border border-vibrant-green rounded-full hidden sm:block"></div>
-            <div className="absolute bottom-10 right-10 w-24 h-24 border border-warm-yellow rounded-full hidden sm:block"></div>
+            <div className="absolute bottom-10 right-10 w-24 h-24 border border-light-magenta dark:border-warm-yellow rounded-full hidden sm:block"></div>
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-48 h-48 border border-electric-blue rounded-full"></div>
           </div>
           
@@ -96,7 +96,7 @@ function App() {
                   className="justify-center"
                 />
                 <p className="text-gray-300 mt-3 sm:mt-4 font-poppins text-sm sm:text-base">
-                  Current Score: <span className="text-warm-yellow font-bold">{count}</span>
+                  Current Score: <span className="text-light-magenta dark:text-warm-yellow font-bold">{count}</span>
                 </p>
               </div>
               
@@ -133,15 +133,15 @@ function App() {
             </div>
             
             {/* Status Bar */}
-            <div className="mt-8 sm:mt-10 md:mt-12 bg-deep-charcoal border border-warm-yellow rounded-lg sm:rounded-xl p-4 sm:p-5 md:p-6">
+            <div className="mt-8 sm:mt-10 md:mt-12 bg-deep-charcoal border border-light-magenta dark:border-warm-yellow rounded-lg sm:rounded-xl p-4 sm:p-5 md:p-6">
               <p className="text-gray-300 font-poppins text-base sm:text-lg">
-                Game Status: <span className="text-warm-yellow font-bold">
+                Game Status: <span className="text-light-magenta dark:text-warm-yellow font-bold">
                   {count === 0 ? 'Ready to Start' : count < 5 ? 'Getting Started' : count < 10 ? 'On Fire!' : 'Legendary!'}
                 </span>
               </p>
               <div className="mt-3 sm:mt-4 bg-charcoal-light rounded-full h-2 sm:h-3 overflow-hidden">
                 <div 
-                  className="h-full bg-gradient-to-r from-vibrant-green to-warm-yellow transition-all duration-500"
+                  className="h-full bg-gradient-to-r from-vibrant-green to-light-magenta dark:to-warm-yellow transition-all duration-500"
                   style={{ width: `${Math.min(100, (count / 10) * 100)}%` }}
                 ></div>
               </div>

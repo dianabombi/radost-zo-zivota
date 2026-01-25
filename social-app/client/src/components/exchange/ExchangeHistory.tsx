@@ -29,7 +29,7 @@ const ExchangeHistory: React.FC<ExchangeHistoryProps> = ({ exchanges }) => {
   const getStatusColor = (status: string): string => {
     switch (status) {
       case 'completed': return 'text-vibrant-green';
-      case 'confirmed': return 'text-warm-yellow';
+      case 'confirmed': return 'text-light-magenta dark:text-warm-yellow';
       case 'pending': return 'text-electric-blue';
       default: return 'text-gray-400';
     }
@@ -116,7 +116,7 @@ const ExchangeHistory: React.FC<ExchangeHistoryProps> = ({ exchanges }) => {
               <div className="bg-charcoal rounded-lg p-3">
                 <div className="flex items-center gap-2 mb-2">
                   <span className="text-base">📥</span>
-                  <span className="text-warm-yellow font-poppins font-semibold text-xs sm:text-sm">
+                  <span className="text-light-magenta dark:text-warm-yellow font-poppins font-semibold text-xs sm:text-sm">
                     Čo som dostal/a
                   </span>
                 </div>

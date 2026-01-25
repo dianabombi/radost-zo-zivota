@@ -38,8 +38,11 @@ export default {
         'light-purple': '#8B5CF6',    // Vibrant purple
         'light-pink': '#EC4899',      // Hot pink
         'light-blue': '#3B82F6',      // Bright blue
+        'light-magenta': '#D946EF',   // Magenta (replaces yellow in light mode)
+        'light-violet': '#8B5CF6',    // Violet
         'light-purple-soft': '#C4B5FD', // Soft purple for backgrounds
         'light-pink-soft': '#FBCFE8',   // Soft pink for backgrounds
+        'light-magenta-soft': '#F5D0FE', // Soft magenta for backgrounds
       },
       boxShadow: {
         'neon-blue': '0 0 20px rgba(0, 74, 239, 0.5)',

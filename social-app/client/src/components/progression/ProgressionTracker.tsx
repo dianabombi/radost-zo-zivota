@@ -42,13 +42,13 @@ const ProgressionTracker: React.FC<ProgressionTrackerProps> = ({ progression }) 
             <span className="text-light-text-secondary dark:text-gray-300 font-poppins text-xs sm:text-sm">
               Do ďalšieho levelu:
             </span>
-            <span className="text-warm-yellow font-poppins text-xs sm:text-sm font-semibold">
+            <span className="text-light-magenta dark:text-warm-yellow font-poppins text-xs sm:text-sm font-semibold">
               {nextMilestone.requiredInteractions - progression.totalInteractions} interakcií
             </span>
           </div>
           <div className="w-full bg-gray-200 dark:bg-charcoal rounded-full h-3 sm:h-4 overflow-hidden border border-electric-blue">
             <div
-              className="h-full bg-gradient-to-r from-vibrant-green to-warm-yellow transition-all duration-1000 relative overflow-hidden"
+              className="h-full bg-gradient-to-r from-vibrant-green to-light-magenta dark:to-warm-yellow transition-all duration-1000 relative overflow-hidden"
               style={{ width: `${Math.min(progressToNext, 100)}%` }}
             >
               <div className="absolute inset-0 bg-white opacity-20 animate-pulse"></div>
@@ -59,7 +59,7 @@ const ProgressionTracker: React.FC<ProgressionTrackerProps> = ({ progression }) 
 
       {/* Next Unlock */}
       {progression.nextUnlock && (
-        <div className="bg-gray-100 dark:bg-charcoal rounded-lg p-3 sm:p-4 border border-warm-yellow border-opacity-30">
+        <div className="bg-gray-100 dark:bg-charcoal rounded-lg p-3 sm:p-4 border border-light-magenta dark:border-warm-yellow border-opacity-30">
           <div className="flex items-center gap-3">
             <div className="text-3xl sm:text-4xl">🔒</div>
             <div className="flex-1">
@@ -67,7 +67,7 @@ const ProgressionTracker: React.FC<ProgressionTrackerProps> = ({ progression }) 
                 Ďalšie odomknutie
               </h4>
               <p className="text-light-text-secondary dark:text-gray-300 font-poppins text-xs sm:text-sm">
-                <strong className="text-warm-yellow">
+                <strong className="text-light-magenta dark:text-warm-yellow">
                   {progression.nextUnlock.type === 'community' && 'Komunitná úroveň'}
                   {progression.nextUnlock.type === 'city' && 'Mestská úroveň'}
                 </strong>

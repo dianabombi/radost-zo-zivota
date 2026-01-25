@@ -12,8 +12,8 @@ export const SupabaseDebug: React.FC = () => {
         <p>Configured: <span className={isSupabaseConfigured ? 'text-vibrant-green' : 'text-red-500'}>
           {isSupabaseConfigured ? 'YES ✅' : 'NO ❌'}
         </span></p>
-        <p>URL: <span className="text-warm-yellow">{url || 'NOT SET'}</span></p>
-        <p>Key: <span className="text-warm-yellow">{key ? `${key.substring(0, 20)}...` : 'NOT SET'}</span></p>
+        <p>URL: <span className="text-light-magenta dark:text-warm-yellow">{url || 'NOT SET'}</span></p>
+        <p>Key: <span className="text-light-magenta dark:text-warm-yellow">{key ? `${key.substring(0, 20)}...` : 'NOT SET'}</span></p>
         <p>Mode: <span className="text-vibrant-green">{import.meta.env.MODE}</span></p>
       </div>
     </div>

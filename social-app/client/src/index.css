@@ -44,4 +44,21 @@
   ::-webkit-scrollbar-thumb:hover {
     @apply bg-vibrant-green;
   }
+
+  /* Light mode color replacements - yellow becomes magenta/violet */
+  .light-mode-yellow {
+    @apply text-light-magenta dark:text-warm-yellow;
+  }
+
+  .light-mode-yellow-bg {
+    @apply bg-light-magenta dark:bg-warm-yellow;
+  }
+
+  .light-mode-yellow-border {
+    @apply border-light-magenta dark:border-warm-yellow;
+  }
+
+  .light-mode-yellow-ring {
+    @apply ring-light-magenta dark:ring-warm-yellow;
+  }
 }

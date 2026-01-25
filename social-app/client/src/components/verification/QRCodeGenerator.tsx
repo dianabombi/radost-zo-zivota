@@ -112,7 +112,7 @@ const QRCodeGenerator: React.FC<QRCodeGeneratorProps> = ({ userId, onScan }) => 
 
             {/* Timer */}
             <div className="text-center">
-              <div className="text-3xl sm:text-4xl font-poppins font-bold text-warm-yellow mb-2">
+              <div className="text-3xl sm:text-4xl font-poppins font-bold text-light-magenta dark:text-warm-yellow mb-2">
                 {formatTime(timeLeft)}
               </div>
               <p className="text-gray-400 text-xs sm:text-sm font-poppins">
@@ -123,7 +123,7 @@ const QRCodeGenerator: React.FC<QRCodeGeneratorProps> = ({ userId, onScan }) => 
             {/* Progress Bar */}
             <div className="w-full bg-charcoal rounded-full h-2 overflow-hidden">
               <div
-                className="h-full bg-gradient-to-r from-vibrant-green to-warm-yellow transition-all duration-1000"
+                className="h-full bg-gradient-to-r from-vibrant-green to-light-magenta dark:to-warm-yellow transition-all duration-1000"
                 style={{ width: `${(timeLeft / 300) * 100}%` }}
               />
             </div>
@@ -179,7 +179,7 @@ const QRCodeGenerator: React.FC<QRCodeGeneratorProps> = ({ userId, onScan }) => 
               value={scannedCode}
               onChange={(e) => setScannedCode(e.target.value)}
               placeholder="Zadaj alebo naskenuj kód..."
-              className="w-full bg-charcoal border-2 border-vibrant-green rounded-lg px-4 py-3 text-white font-poppins focus:outline-none focus:border-warm-yellow transition-colors"
+              className="w-full bg-charcoal border-2 border-vibrant-green rounded-lg px-4 py-3 text-white font-poppins focus:outline-none focus:border-light-magenta dark:border-warm-yellow transition-colors"
             />
 
             <div className="flex gap-3">

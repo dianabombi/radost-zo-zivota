@@ -22,7 +22,7 @@ const LicenseInfo: React.FC<LicenseInfoProps> = ({
 
   if (hasLicense) {
     return (
-      <div className="bg-gradient-to-r from-vibrant-green to-warm-yellow p-[2px] rounded-xl mb-4">
+      <div className="bg-gradient-to-r from-vibrant-green to-light-magenta dark:to-warm-yellow p-[2px] rounded-xl mb-4">
         <div className="bg-charcoal rounded-xl p-4 sm:p-6">
           <div className="flex items-center gap-3 mb-3">
             <div className="text-3xl sm:text-4xl">{icon}</div>
@@ -44,11 +44,11 @@ const LicenseInfo: React.FC<LicenseInfoProps> = ({
   }
 
   return (
-    <div className="bg-white dark:bg-charcoal-light border-2 border-light-blue dark:border-warm-yellow rounded-xl p-4 sm:p-6 mb-4">
+    <div className="bg-white dark:bg-charcoal-light border-2 border-light-blue dark:border-light-magenta dark:border-warm-yellow rounded-xl p-4 sm:p-6 mb-4">
       <div className="text-center space-y-4">
         <div className="text-5xl sm:text-6xl">🔒</div>
         <div>
-          <h3 className="text-light-blue dark:text-warm-yellow font-poppins font-bold text-lg sm:text-xl mb-2">
+          <h3 className="text-light-blue dark:text-light-magenta dark:text-warm-yellow font-poppins font-bold text-lg sm:text-xl mb-2">
             {title} potrebná
           </h3>
           <p className="text-light-text-secondary dark:text-gray-300 font-poppins text-sm sm:text-base mb-4">
@@ -59,7 +59,7 @@ const LicenseInfo: React.FC<LicenseInfoProps> = ({
           </p>
         </div>
 
-        <div className="bg-charcoal rounded-lg p-4 border border-warm-yellow border-opacity-30">
+        <div className="bg-charcoal rounded-lg p-4 border border-light-magenta dark:border-warm-yellow border-opacity-30">
           <p className="text-gray-400 font-poppins text-xs sm:text-sm mb-3">
             Výhody licencie:
           </p>

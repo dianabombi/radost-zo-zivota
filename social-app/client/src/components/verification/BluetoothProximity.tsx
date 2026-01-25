@@ -115,7 +115,7 @@ const BluetoothProximity: React.FC<BluetoothProximityProps> = ({ onDeviceFound }
 
   const getDistanceColor = (distance: number): string => {
     if (distance < 2) return 'text-vibrant-green';
-    if (distance < 5) return 'text-warm-yellow';
+    if (distance < 5) return 'text-light-magenta dark:text-warm-yellow';
     return 'text-red-400';
   };
 
@@ -162,7 +162,7 @@ const BluetoothProximity: React.FC<BluetoothProximityProps> = ({ onDeviceFound }
                       ? 'border-light-pink dark:border-vibrant-green hover:shadow-lg hover:shadow-light-pink-soft dark:hover:shadow-neon-green cursor-pointer' 
                       : 'border-gray-400 dark:border-gray-600 opacity-50 cursor-not-allowed'
                     }
-                    ${selectedDevice?.id === device.id ? 'ring-2 ring-warm-yellow' : ''}
+                    ${selectedDevice?.id === device.id ? 'ring-2 ring-light-magenta dark:ring-warm-yellow' : ''}
                   `}
                   onClick={() => device.isInRange && handleConnect(device)}
                 >

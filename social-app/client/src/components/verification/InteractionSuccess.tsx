@@ -18,7 +18,7 @@ const InteractionSuccess: React.FC<InteractionSuccessProps> = ({ result, onClose
 
         {/* Title */}
         <div>
-          <h3 className="text-2xl sm:text-3xl font-poppins font-bold text-transparent bg-gradient-to-r from-vibrant-green to-warm-yellow bg-clip-text mb-2">
+          <h3 className="text-2xl sm:text-3xl font-poppins font-bold text-transparent bg-gradient-to-r from-vibrant-green to-light-magenta dark:to-warm-yellow bg-clip-text mb-2">
             Interakcia úspešná!
           </h3>
           <p className="text-light-text-secondary dark:text-gray-300 font-poppins text-sm sm:text-base">
@@ -46,8 +46,8 @@ const InteractionSuccess: React.FC<InteractionSuccessProps> = ({ result, onClose
               Celkové body
             </p>
           </div>
-          <div className="bg-light-surface dark:bg-charcoal border-2 border-warm-yellow rounded-lg p-4">
-            <div className="text-2xl sm:text-3xl font-poppins font-bold text-warm-yellow">
+          <div className="bg-light-surface dark:bg-charcoal border-2 border-light-magenta dark:border-warm-yellow rounded-lg p-4">
+            <div className="text-2xl sm:text-3xl font-poppins font-bold text-light-magenta dark:text-warm-yellow">
               {result.newLevel}
             </div>
             <p className="text-light-text-secondary dark:text-gray-400 font-poppins text-xs sm:text-sm">

@@ -191,7 +191,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSwitchToLogin }) => {
 
         {error && (
           <div className="bg-red-900 bg-opacity-20 border border-red-500 rounded-lg sm:rounded-xl p-3 sm:p-4">
-            <p className="text-warm-yellow font-poppins text-xs sm:text-sm text-center">
+            <p className="text-light-magenta dark:text-warm-yellow font-poppins text-xs sm:text-sm text-center">
               <strong>🔧 {t('auth.demoMode')}</strong>
             </p>
           </div>
@@ -220,7 +220,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSwitchToLogin }) => {
             <button
               type="button"
               onClick={onSwitchToLogin}
-              className="text-electric-blue hover:text-warm-yellow transition-colors duration-300 font-semibold"
+              className="text-electric-blue hover:text-light-magenta dark:text-warm-yellow transition-colors duration-300 font-semibold"
             >
               {t('auth.login')}
             </button>
