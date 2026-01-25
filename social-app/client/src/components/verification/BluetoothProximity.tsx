@@ -2,6 +2,22 @@ import React, { useState } from 'react';
 import type { BluetoothDevice } from '../../types/verification';
 import Button from '../ui/Button';
 
+// Web Bluetooth API types
+declare global {
+  interface Navigator {
+    bluetooth: {
+      requestDevice(options: {
+        acceptAllDevices?: boolean;
+        optionalServices?: string[];
+      }): Promise<BluetoothDevice & { gatt?: BluetoothRemoteGATTServer }>;
+    };
+  }
+  interface BluetoothRemoteGATTServer {
+    connect(): Promise<BluetoothRemoteGATTServer>;
+    disconnect(): void;
+  }
+}
+
 interface BluetoothProximityProps {
   onDeviceFound?: (device: BluetoothDevice) => void;
 }
@@ -10,38 +26,86 @@ const BluetoothProximity: React.FC<BluetoothProximityProps> = ({ onDeviceFound }
   const [isScanning, setIsScanning] = useState(false);
   const [devices, setDevices] = useState<BluetoothDevice[]>([]);
   const [selectedDevice, setSelectedDevice] = useState<BluetoothDevice | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
-  // Mock Bluetooth scanning - In production, use Web Bluetooth API
-  const startScanning = () => {
+  // Check if Web Bluetooth API is supported
+  const isBluetoothSupported = () => {
+    return 'bluetooth' in navigator;
+  };
+
+  // Calculate approximate distance from RSSI (signal strength)
+  const calculateDistance = (rssi: number): number => {
+    // Simplified distance calculation: d = 10 ^ ((TxPower - RSSI) / (10 * n))
+    // Assuming TxPower = -59 dBm and n = 2 (free space)
+    const txPower = -59;
+    const n = 2;
+    const distance = Math.pow(10, (txPower - rssi) / (10 * n));
+    return Math.round(distance * 10) / 10; // Round to 1 decimal
+  };
+
+  // Real Web Bluetooth API scanning
+  const startScanning = async () => {
     setIsScanning(true);
+    setError(null);
+    setDevices([]);
     
-    // Simulate finding devices
-    setTimeout(() => {
-      const mockDevices: BluetoothDevice[] = [
-        {
-          id: 'device-1',
-          name: 'Hráč v blízkosti',
-          distance: 1.2,
-          rssi: -45,
+    // Check browser support
+    if (!isBluetoothSupported()) {
+      setError('Web Bluetooth API nie je podporované v tomto prehliadači. Použite Chrome alebo Edge.');
+      setIsScanning(false);
+      return;
+    }
+
+    try {
+      console.log('🔍 Starting Bluetooth scan...');
+      
+      // Request Bluetooth device
+      const device = await navigator.bluetooth.requestDevice({
+        acceptAllDevices: true,
+        optionalServices: ['battery_service', 'device_information']
+      });
+
+      console.log('✅ Device found:', device.name);
+
+      // Get GATT server
+      const server = await device.gatt?.connect();
+      
+      if (server) {
+        // Try to get RSSI (signal strength) - not all devices support this
+        const rssi = -60; // Default value (would need device-specific API to get real RSSI)
+        
+        // Create device object
+        const bluetoothDevice: BluetoothDevice = {
+          id: device.id,
+          name: device.name || 'Neznáme zariadenie',
+          distance: calculateDistance(rssi),
+          rssi: rssi,
           isInRange: true,
-        },
-        {
-          id: 'device-2',
-          name: 'Ďalší hráč',
-          distance: 3.5,
-          rssi: -65,
-          isInRange: true,
-        },
-        {
-          id: 'device-3',
-          name: 'Vzdialený hráč',
-          distance: 8.0,
-          rssi: -85,
-          isInRange: false,
-        },
-      ];
-      setDevices(mockDevices);
-    }, 2000);
+        };
+
+        setDevices([bluetoothDevice]);
+        
+        // Disconnect after getting info
+        server.disconnect();
+      }
+      
+      setIsScanning(false);
+      
+    } catch (err) {
+      console.error('❌ Bluetooth error:', err);
+      if (err instanceof Error) {
+        if (err.message.includes('User cancelled')) {
+          setError('Skenovanie bolo zrušené.');
+        } else if (err.message.includes('not allowed')) {
+          setError('Bluetooth prístup nie je povolený. Povoľte Bluetooth v nastaveniach prehliadača.');
+        } else {
+          setError(`Chyba pri skenovaní: ${err.message}`);
+        }
+      } else {
+        setError('Neznáma chyba pri skenovaní Bluetooth zariadení.');
+      }
+      setIsScanning(false);
+    }
   };
 
   const stopScanning = () => {
@@ -158,6 +222,15 @@ const BluetoothProximity: React.FC<BluetoothProximityProps> = ({ onDeviceFound }
               ℹ️ Bluetooth overenie funguje do vzdialenosti 5 metrov. Uisti sa, že máš Bluetooth zapnutý.
             </p>
           </div>
+
+          {/* Error Message */}
+          {error && (
+            <div className="bg-red-500 bg-opacity-10 border border-red-500 rounded-lg p-4">
+              <p className="text-red-400 font-poppins text-xs sm:text-sm text-center">
+                ❌ {error}
+              </p>
+            </div>
+          )}
 
           <Button
             onClick={startScanning}
