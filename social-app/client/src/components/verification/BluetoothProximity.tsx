@@ -28,9 +28,50 @@ const BluetoothProximity: React.FC<BluetoothProximityProps> = ({ onDeviceFound }
   const [selectedDevice, setSelectedDevice] = useState<BluetoothDevice | null>(null);
   const [error, setError] = useState<string | null>(null);
 
+  // Detect browser type
+  const getBrowserInfo = () => {
+    const ua = navigator.userAgent;
+    const isChrome = /Chrome/.test(ua) && /Google Inc/.test(navigator.vendor);
+    const isEdge = /Edg/.test(ua);
+    const isSafari = /Safari/.test(ua) && !/Chrome/.test(ua);
+    const isFirefox = /Firefox/.test(ua);
+    const isAndroid = /Android/.test(ua);
+    const isIOS = /iPhone|iPad|iPod/.test(ua);
+    
+    return { isChrome, isEdge, isSafari, isFirefox, isAndroid, isIOS };
+  };
+
   // Check if Web Bluetooth API is supported
   const isBluetoothSupported = () => {
     return 'bluetooth' in navigator;
+  };
+
+  // Get user-friendly error message based on browser
+  const getBrowserSupportMessage = () => {
+    const browser = getBrowserInfo();
+    
+    if (browser.isSafari) {
+      return 'Safari nepodporuje Web Bluetooth API. Použite Chrome alebo Edge na počítači, alebo Chrome na Android zariadení.';
+    }
+    
+    if (browser.isFirefox) {
+      return 'Firefox nepodporuje Web Bluetooth API (je za experimentálnym flagom). Použite Chrome alebo Edge na počítači, alebo Chrome na Android zariadení.';
+    }
+    
+    if (browser.isIOS) {
+      return 'iOS zariadenia nepodporujú Web Bluetooth API. Použite Android zariadenie s Chrome prehliadačom.';
+    }
+    
+    if (!browser.isChrome && !browser.isEdge) {
+      return 'Váš prehliadač nepodporuje Web Bluetooth API. Použite Chrome alebo Edge na počítači, alebo Chrome na Android zariadení.';
+    }
+    
+    // Chrome/Edge but still not supported (might be HTTP instead of HTTPS)
+    if (window.location.protocol !== 'https:' && window.location.hostname !== 'localhost') {
+      return 'Web Bluetooth API vyžaduje HTTPS pripojenie. Aplikácia musí bežať na https:// alebo localhost.';
+    }
+    
+    return 'Web Bluetooth API nie je k dispozícii. Skontrolujte, či máte Bluetooth zapnutý a povolený v prehliadači.';
   };
 
   // Calculate approximate distance from RSSI (signal strength)
@@ -51,7 +92,7 @@ const BluetoothProximity: React.FC<BluetoothProximityProps> = ({ onDeviceFound }
     
     // Check browser support
     if (!isBluetoothSupported()) {
-      setError('Web Bluetooth API nie je podporované v tomto prehliadači. Použite Chrome alebo Edge.');
+      setError(getBrowserSupportMessage());
       setIsScanning(false);
       return;
     }
@@ -209,14 +250,81 @@ const BluetoothProximity: React.FC<BluetoothProximityProps> = ({ onDeviceFound }
         </div>
       ) : (
         <div className="space-y-4">
-          <div className="bg-electric-blue bg-opacity-10 border border-electric-blue rounded-lg p-4">
-            <p className="text-electric-blue font-poppins text-xs sm:text-sm text-center">
-              ℹ️ Bluetooth overenie funguje do vzdialenosti 5 metrov. Uisti sa, že máš Bluetooth zapnutý.
-            </p>
-          </div>
+          {/* Browser Support Info */}
+          {!isBluetoothSupported() ? (
+            <>
+              <div className="bg-red-500 bg-opacity-10 border border-red-500 rounded-lg p-4">
+                <p className="text-red-400 font-poppins text-xs sm:text-sm text-center font-semibold mb-2">
+                  ⚠️ Nepodporovaný prehliadač
+                </p>
+                <p className="text-red-400 font-poppins text-xs sm:text-sm text-center">
+                  {getBrowserSupportMessage()}
+                </p>
+              </div>
 
-          {/* Error Message */}
-          {error && (
+              {/* Alternative Methods */}
+              <div className="bg-vibrant-green bg-opacity-10 border-2 border-vibrant-green rounded-xl p-4 sm:p-6">
+                <div className="text-center mb-4">
+                  <div className="text-3xl mb-2">✨</div>
+                  <h4 className="text-vibrant-green font-poppins font-bold text-base sm:text-lg mb-2">
+                    Použite alternatívne metódy
+                  </h4>
+                  <p className="text-light-text-secondary dark:text-gray-300 font-poppins text-xs sm:text-sm">
+                    Bluetooth nie je dostupný, ale môžete použiť tieto metódy:
+                  </p>
+                </div>
+
+                <div className="space-y-3">
+                  {/* QR Code Option */}
+                  <div className="bg-white dark:bg-charcoal-light rounded-lg p-3 sm:p-4 border-2 border-electric-blue">
+                    <div className="flex items-start gap-3">
+                      <div className="text-2xl flex-shrink-0">📱</div>
+                      <div className="flex-1">
+                        <h5 className="text-electric-blue font-poppins font-semibold text-sm sm:text-base mb-1">
+                          QR Kód Overenie
+                        </h5>
+                        <p className="text-light-text-secondary dark:text-gray-400 font-poppins text-xs">
+                          Naskenujte QR kód druhého používateľa pomocou kamery. Funguje vo všetkých prehliadačoch!
+                        </p>
+                      </div>
+                      <div className="text-vibrant-green text-xl flex-shrink-0">✓</div>
+                    </div>
+                  </div>
+
+                  {/* Email Option */}
+                  <div className="bg-white dark:bg-charcoal-light rounded-lg p-3 sm:p-4 border-2 border-light-purple dark:border-light-pink">
+                    <div className="flex items-start gap-3">
+                      <div className="text-2xl flex-shrink-0">📧</div>
+                      <div className="flex-1">
+                        <h5 className="text-light-purple dark:text-light-pink font-poppins font-semibold text-sm sm:text-base mb-1">
+                          Email Overenie
+                        </h5>
+                        <p className="text-light-text-secondary dark:text-gray-400 font-poppins text-xs">
+                          Zadajte email druhého používateľa a pošlite žiadosť o stretnutie.
+                        </p>
+                      </div>
+                      <div className="text-vibrant-green text-xl flex-shrink-0">✓</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-4 pt-4 border-t border-vibrant-green border-opacity-30">
+                  <p className="text-light-text-secondary dark:text-gray-400 font-poppins text-xs text-center">
+                    💡 Tip: Vráťte sa späť a vyberte inú metódu overenia
+                  </p>
+                </div>
+              </div>
+            </>
+          ) : (
+            <div className="bg-electric-blue bg-opacity-10 border border-electric-blue rounded-lg p-4">
+              <p className="text-electric-blue font-poppins text-xs sm:text-sm text-center">
+                ℹ️ Bluetooth overenie funguje do vzdialenosti 5 metrov. Uisti sa, že máš Bluetooth zapnutý.
+              </p>
+            </div>
+          )}
+
+          {/* Additional Error Message */}
+          {error && isBluetoothSupported() && (
             <div className="bg-red-500 bg-opacity-10 border border-red-500 rounded-lg p-4">
               <p className="text-red-400 font-poppins text-xs sm:text-sm text-center">
                 ❌ {error}
@@ -229,9 +337,18 @@ const BluetoothProximity: React.FC<BluetoothProximityProps> = ({ onDeviceFound }
             variant="primary"
             className="w-full"
             glow
+            disabled={!isBluetoothSupported()}
           >
             📡 Spustiť vyhľadávanie
           </Button>
+          
+          {!isBluetoothSupported() && (
+            <div className="bg-light-magenta dark:bg-warm-yellow bg-opacity-10 border border-light-magenta dark:border-warm-yellow rounded-lg p-3 mt-2">
+              <p className="text-light-magenta dark:text-warm-yellow font-poppins text-xs text-center">
+                💡 <strong>Odporúčané prehliadače:</strong> Chrome alebo Edge (desktop), Chrome (Android)
+              </p>
+            </div>
+          )}
         </div>
       )}
 
