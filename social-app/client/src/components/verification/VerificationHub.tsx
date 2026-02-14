@@ -3,6 +3,7 @@ import type { MeetingRequest, Connection, VerificationMethod } from '../../types
 import type { ExchangeFormData, Exchange } from '../../types/exchange';
 import QRCodeGenerator from './QRCodeGenerator';
 import BluetoothProximity from './BluetoothProximity';
+import DemoMode from './DemoMode';
 import PendingRequests from './PendingRequests';
 import ConnectionHistory from './ConnectionHistory';
 import ExchangeForm from '../exchange/ExchangeForm';
@@ -293,6 +294,35 @@ const VerificationHub: React.FC = () => {
     }
   };
 
+  const handleDemoInteraction = async (points: number) => {
+    console.log('Demo interaction:', points);
+    
+    if (!user) return;
+    
+    // Submit demo interaction
+    const result = await submitInteraction({
+      userId: user.id,
+      verificationMethod: 'demo',
+      interactionType: 'individual',
+      levelType: 'individual',
+      metadata: {
+        demoMode: true,
+        points: points,
+      },
+    });
+    setInteractionResult(result);
+    
+    if (result.success) {
+      // Show success with points earned
+      setFlowState('success');
+      
+      // Reload page to refresh user data
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000);
+    }
+  };
+
 
   const handleExchangeSubmit = (data: ExchangeFormData) => {
     console.log('Exchange submitted:', data);
@@ -450,7 +480,26 @@ const VerificationHub: React.FC = () => {
         <div className="space-y-4 sm:space-y-6">
           {/* Method Selection */}
           {!selectedMethod ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+              {/* Demo Mode - Featured */}
+              <button
+                onClick={() => setSelectedMethod('demo' as VerificationMethod)}
+                className="bg-gradient-to-br from-light-magenta to-light-violet dark:from-warm-yellow dark:to-vibrant-green border-2 border-light-magenta dark:border-warm-yellow rounded-xl p-4 sm:p-6 hover:shadow-lg hover:shadow-light-magenta-soft dark:hover:shadow-neon-yellow transition-all duration-300 group text-center relative overflow-hidden"
+              >
+                <div className="absolute top-2 right-2 bg-white dark:bg-charcoal text-light-magenta dark:text-warm-yellow text-xs font-bold px-2 py-1 rounded-full">
+                  DEMO
+                </div>
+                <div className="text-4xl sm:text-5xl mb-3 group-hover:scale-110 transition-transform">
+                  🎮
+                </div>
+                <h3 className="text-base sm:text-lg font-poppins font-bold text-white mb-2">
+                  Demo Režim
+                </h3>
+                <p className="text-white text-opacity-90 font-poppins text-xs sm:text-sm leading-tight">
+                  Testovací režim - získaj body bez overovania
+                </p>
+              </button>
+
               {/* QR Code Method */}
               <button
                 onClick={() => setSelectedMethod('qr_code')}
@@ -493,6 +542,10 @@ const VerificationHub: React.FC = () => {
               >
                 ← Späť na výber metódy
               </Button>
+
+              {selectedMethod === 'demo' && (
+                <DemoMode onInteraction={handleDemoInteraction} />
+              )}
 
               {selectedMethod === 'qr_code' && user && (
                 <QRCodeGenerator
