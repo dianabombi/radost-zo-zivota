@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import type { MeetingRequest, Connection, VerificationMethod } from '../../types/verification';
 import type { ExchangeFormData, Exchange } from '../../types/exchange';
-import QRCodeGenerator from './QRCodeGenerator';
-import BluetoothProximity from './BluetoothProximity';
-import DemoMode from './DemoMode';
+import SimpleExchange from './SimpleExchange';
 import PendingRequests from './PendingRequests';
 import ConnectionHistory from './ConnectionHistory';
 import ExchangeForm from '../exchange/ExchangeForm';
@@ -294,21 +292,21 @@ const VerificationHub: React.FC = () => {
     }
   };
 
-  const handleDemoInteraction = async (points: number) => {
-    console.log('Demo interaction:', points);
+  const handleSimpleExchange = async (data: { whatIGave: string; whatIGot: string }) => {
+    console.log('Simple exchange:', data);
     
     if (!user) return;
     
-    // Submit demo interaction
+    // Submit simple exchange - 1 point per interaction
     const result = await submitInteraction({
       userId: user.id,
-      verificationMethod: 'demo',
+      verificationMethod: 'simple_exchange' as any,
       interactionType: 'individual',
       levelType: 'individual',
       metadata: {
-        demoMode: true,
-        points: points,
-      },
+        whatIGave: data.whatIGave,
+        whatIGot: data.whatIGot,
+      } as any,
     });
     setInteractionResult(result);
     
@@ -477,90 +475,7 @@ const VerificationHub: React.FC = () => {
       )}
 
       {viewMode === 'methods' && flowState === 'select_method' && (
-        <div className="space-y-4 sm:space-y-6">
-          {/* Method Selection */}
-          {!selectedMethod ? (
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
-              {/* Demo Mode - Featured */}
-              <button
-                onClick={() => setSelectedMethod('demo' as VerificationMethod)}
-                className="bg-gradient-to-br from-light-magenta to-light-violet dark:from-warm-yellow dark:to-vibrant-green border-2 border-light-magenta dark:border-warm-yellow rounded-xl p-4 sm:p-6 hover:shadow-lg hover:shadow-light-magenta-soft dark:hover:shadow-neon-yellow transition-all duration-300 group text-center relative overflow-hidden"
-              >
-                <div className="absolute top-2 right-2 bg-white dark:bg-charcoal text-light-magenta dark:text-warm-yellow text-xs font-bold px-2 py-1 rounded-full">
-                  DEMO
-                </div>
-                <div className="text-4xl sm:text-5xl mb-3 group-hover:scale-110 transition-transform">
-                  🎮
-                </div>
-                <h3 className="text-base sm:text-lg font-poppins font-bold text-white mb-2">
-                  Demo Režim
-                </h3>
-                <p className="text-white text-opacity-90 font-poppins text-xs sm:text-sm leading-tight">
-                  Testovací režim - získaj body bez overovania
-                </p>
-              </button>
-
-              {/* QR Code Method */}
-              <button
-                onClick={() => setSelectedMethod('qr_code')}
-                className="bg-white dark:bg-charcoal-light border-2 border-light-purple dark:border-electric-blue rounded-xl p-4 sm:p-6 hover:shadow-lg hover:shadow-light-purple-soft dark:hover:shadow-neon-blue transition-all duration-300 group text-center"
-              >
-                <div className="text-4xl sm:text-5xl mb-3 group-hover:scale-110 transition-transform">
-                  📱
-                </div>
-                <h3 className="text-base sm:text-lg font-poppins font-bold text-light-text dark:text-white mb-2">
-                  QR Kód
-                </h3>
-                <p className="text-light-text-secondary dark:text-gray-400 font-poppins text-xs sm:text-sm leading-tight">
-                  Vygeneruj jednorazový kód alebo naskenuj kód druhej osoby
-                </p>
-              </button>
-
-              {/* Bluetooth Method */}
-              <button
-                onClick={() => setSelectedMethod('bluetooth')}
-                className="bg-white dark:bg-charcoal-light border-2 border-light-pink dark:border-vibrant-green rounded-xl p-4 sm:p-6 hover:shadow-lg hover:shadow-light-pink-soft dark:hover:shadow-neon-green transition-all duration-300 group text-center"
-              >
-                <div className="text-4xl sm:text-5xl mb-3 group-hover:scale-110 transition-transform">
-                  📡
-                </div>
-                <h3 className="text-base sm:text-lg font-poppins font-bold text-light-text dark:text-white mb-2">
-                  Bluetooth
-                </h3>
-                <p className="text-light-text-secondary dark:text-gray-400 font-poppins text-xs sm:text-sm leading-tight">
-                  Automatické overenie vzdialenosti do 5 metrov
-                </p>
-              </button>
-
-            </div>
-          ) : (
-            <div className="bg-white dark:bg-charcoal-light border-2 border-light-purple dark:border-electric-blue rounded-xl sm:rounded-2xl p-6 sm:p-8 shadow-lg shadow-light-purple-soft dark:shadow-neon-blue">
-              <Button
-                onClick={() => setSelectedMethod(null)}
-                variant="outline"
-                className="mb-6 text-sm"
-              >
-                ← Späť na výber metódy
-              </Button>
-
-              {selectedMethod === 'demo' && (
-                <DemoMode onInteraction={handleDemoInteraction} />
-              )}
-
-              {selectedMethod === 'qr_code' && user && (
-                <QRCodeGenerator
-                  userId={user.id}
-                  onScan={handleQRScan}
-                />
-              )}
-
-              {selectedMethod === 'bluetooth' && (
-                <BluetoothProximity onDeviceFound={handleBluetoothConnect} />
-              )}
-
-            </div>
-          )}
-        </div>
+        <SimpleExchange onSubmit={handleSimpleExchange} />
       )}
 
       {viewMode === 'pending' && (
