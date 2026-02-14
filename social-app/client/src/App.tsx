@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { Header } from './components/layout'
 import { Button, Counter } from './components/ui'
 import { AuthModal } from './components'
@@ -13,12 +14,20 @@ import CookiesPage from './components/legal/CookiesPage'
 import { useAuth } from './contexts/AuthContext'
 import './App.css'
 
-type ViewMode = 'home' | 'leaderboard' | 'verification' | 'game' | 'privacy' | 'gdpr' | 'cookies';
-
 function App() {
   const { isAuthenticated, isLoading } = useAuth()
   const [count, setCount] = useState(0)
-  const [viewMode, setViewMode] = useState<ViewMode>('home')
+  const location = useLocation()
+  const navigate = useNavigate()
+  
+  const getViewMode = () => {
+    const path = location.pathname
+    if (path === '/') return 'home'
+    if (path === '/leaderboard') return 'leaderboard'
+    if (path === '/verification') return 'verification'
+    if (path === '/game') return 'game'
+    return 'home'
+  }
 
   const handleCountChange = (newCount: number) => {
     setCount(newCount)
@@ -46,30 +55,22 @@ function App() {
     <ScreenshotProtection>
       <div className="min-h-screen px-0 py-4 sm:p-6 md:p-8 transition-colors duration-300 bg-light-bg dark:bg-deep-charcoal">
         <div className="max-w-7xl mx-auto">
-        {!['privacy', 'gdpr', 'cookies'].includes(viewMode) && (
+        {!['/privacy', '/gdpr', '/cookies'].includes(location.pathname) && (
           <Header 
             title="Hra na radosť zo života" 
-            viewMode={viewMode as 'home' | 'leaderboard' | 'verification' | 'game'}
-            onViewChange={setViewMode}
+            viewMode={getViewMode()}
+            onViewChange={(view) => navigate(`/${view === 'home' ? '' : view}`)}
           />
         )}
         
-        {/* Content Views */}
-        {viewMode === 'home' && (
-          <DashboardHome onNavigate={(view) => setViewMode(view)} />
-        )}
-        
-        {viewMode === 'leaderboard' && <Leaderboard />}
-        
-        {viewMode === 'verification' && <VerificationHub />}
-
-        {viewMode === 'privacy' && <PrivacyPolicy onBack={() => setViewMode('home')} />}
-        
-        {viewMode === 'gdpr' && <GDPRPage onBack={() => setViewMode('home')} />}
-        
-        {viewMode === 'cookies' && <CookiesPage onBack={() => setViewMode('home')} />}
-        
-        {viewMode === 'game' && (
+        <Routes>
+          <Route path="/" element={<DashboardHome onNavigate={(view) => navigate(view === 'home' ? '/' : `/${view}`)} />} />
+          <Route path="/leaderboard" element={<Leaderboard />} />
+          <Route path="/verification" element={<VerificationHub />} />
+          <Route path="/privacy" element={<PrivacyPolicy onBack={() => navigate('/')} />} />
+          <Route path="/gdpr" element={<GDPRPage onBack={() => navigate('/')} />} />
+          <Route path="/cookies" element={<CookiesPage onBack={() => navigate('/')} />} />
+          <Route path="/game" element={
           /* Main Gaming Card */
           <div className="bg-charcoal-light border-2 border-electric-blue rounded-2xl sm:rounded-3xl shadow-neon-blue p-4 sm:p-6 md:p-8 lg:p-10 mb-6 sm:mb-8 relative overflow-hidden">
           {/* Background Pattern */}
@@ -149,22 +150,24 @@ function App() {
             
           </div>
         </div>
-        )}
+          } />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
         
         <footer className="text-center font-poppins px-4 mt-6 sm:mt-8 space-y-3">
           <p className="text-gray-600 dark:text-gray-300 opacity-80 dark:opacity-60 text-sm sm:text-base">
             🎮 Užívaj si hru na radosť zo života
           </p>
           <div className="flex flex-wrap justify-center gap-2 sm:gap-4 text-xs sm:text-sm">
-            <button onClick={() => setViewMode('privacy')} className="text-electric-blue hover:text-vibrant-green transition-colors">
+            <button onClick={() => navigate('/privacy')} className="text-electric-blue hover:text-vibrant-green transition-colors">
               Privacy Policy
             </button>
             <span className="text-gray-400">•</span>
-            <button onClick={() => setViewMode('cookies')} className="text-electric-blue hover:text-vibrant-green transition-colors">
+            <button onClick={() => navigate('/cookies')} className="text-electric-blue hover:text-vibrant-green transition-colors">
               Cookies
             </button>
             <span className="text-gray-400">•</span>
-            <button onClick={() => setViewMode('gdpr')} className="text-electric-blue hover:text-vibrant-green transition-colors">
+            <button onClick={() => navigate('/gdpr')} className="text-electric-blue hover:text-vibrant-green transition-colors">
               GDPR
             </button>
           </div>
