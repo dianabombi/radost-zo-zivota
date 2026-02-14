@@ -217,6 +217,99 @@ export const submitInteraction = async (data: InteractionData): Promise<Interact
   }
 };
 
+// Submit simple exchange with rate limiting (uses Edge Function)
+export const submitSimpleExchange = async (
+  whatIGave: string,
+  whatIGot: string
+): Promise<InteractionResult> => {
+  try {
+    if (!isSupabaseConfigured) {
+      // Demo mode fallback
+      const mockUserStr = localStorage.getItem('mock_user');
+      if (mockUserStr) {
+        const mockUser = JSON.parse(mockUserStr);
+        const newTotalPoints = (mockUser.points || 0) + 1;
+        const newLevel = calculateLevel(newTotalPoints);
+        
+        mockUser.points = newTotalPoints;
+        mockUser.level = newLevel;
+        localStorage.setItem('mock_user', JSON.stringify(mockUser));
+        
+        return {
+          success: true,
+          pointsEarned: 1,
+          newTotalPoints,
+          newLevel,
+          interactionId: `mock-${Date.now()}`,
+        };
+      }
+      
+      return {
+        success: false,
+        error: 'User not found in demo mode',
+      };
+    }
+
+    // Get current session
+    const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+    
+    if (sessionError || !session) {
+      return {
+        success: false,
+        error: 'Not authenticated',
+      };
+    }
+
+    // Call Edge Function with rate limiting
+    const { data, error } = await supabase.functions.invoke('submit-interaction', {
+      body: { whatIGave, whatIGot },
+      headers: {
+        Authorization: `Bearer ${session.access_token}`,
+      },
+    });
+
+    if (error) {
+      console.error('Edge function error:', error);
+      
+      // Check if it's a rate limit error
+      if (error.message?.includes('rate limit') || error.message?.includes('429')) {
+        return {
+          success: false,
+          error: 'Dosiahli ste limit. Môžete odoslať maximálne 10 interakcií za hodinu.',
+        };
+      }
+      
+      return {
+        success: false,
+        error: error.message || 'Failed to submit interaction',
+      };
+    }
+
+    if (!data.success) {
+      return {
+        success: false,
+        error: data.error || 'Failed to submit interaction',
+      };
+    }
+
+    return {
+      success: true,
+      pointsEarned: 1,
+      newTotalPoints: data.newPoints,
+      newLevel: calculateLevel(data.newPoints),
+      interactionId: data.interaction?.id,
+      message: 'Interakcia úspešne odoslaná! +1 bod',
+    };
+
+  } catch (error) {
+    console.error('Error submitting simple exchange:', error);
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'Unknown error',
+    };
+  }
+};
+
 // Get user's interaction history
 export const getUserInteractions = async (userId: string) => {
   if (!isSupabaseConfigured) {

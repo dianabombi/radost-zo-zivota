@@ -297,17 +297,10 @@ const VerificationHub: React.FC = () => {
     
     if (!user) return;
     
-    // Submit simple exchange - 1 point per interaction
-    const result = await submitInteraction({
-      userId: user.id,
-      verificationMethod: 'simple_exchange' as any,
-      interactionType: 'individual',
-      levelType: 'individual',
-      metadata: {
-        whatIGave: data.whatIGave,
-        whatIGot: data.whatIGot,
-      } as any,
-    });
+    // Submit simple exchange with rate limiting via Edge Function
+    const { submitSimpleExchange } = await import('../../services/interactionService');
+    const result = await submitSimpleExchange(data.whatIGave, data.whatIGot);
+    
     setInteractionResult(result);
     
     if (result.success) {
@@ -318,6 +311,9 @@ const VerificationHub: React.FC = () => {
       setTimeout(() => {
         window.location.reload();
       }, 3000);
+    } else if (result.error) {
+      // Show error message (including rate limit errors)
+      alert(result.error);
     }
   };
 
