@@ -5,7 +5,7 @@ import { useTheme } from '../../contexts/ThemeContext';
 import Button from '../ui/Button';
 import LanguageSwitcher from '../ui/LanguageSwitcher';
 
-type ViewMode = 'home' | 'leaderboard' | 'verification' | 'game';
+type ViewMode = 'home' | 'leaderboard' | 'verification' | 'game' | 'privacy' | 'gdpr' | 'cookies';
 
 interface HeaderProps {
   title?: string;

@@ -20,12 +20,14 @@ function App() {
   const location = useLocation()
   const navigate = useNavigate()
   
-  const getViewMode = () => {
+  const getViewMode = (): 'leaderboard' | 'verification' | 'game' | 'privacy' | 'gdpr' | 'home' => {
     const path = location.pathname
     if (path === '/') return 'home'
     if (path === '/leaderboard') return 'leaderboard'
     if (path === '/verification') return 'verification'
     if (path === '/game') return 'game'
+    if (path === '/privacy') return 'privacy'
+    if (path === '/gdpr') return 'gdpr'
     return 'home'
   }
 
@@ -64,7 +66,7 @@ function App() {
         )}
         
         <Routes>
-          <Route path="/" element={<DashboardHome onNavigate={(view) => navigate(view === 'home' ? '/' : `/${view}`)} />} />
+          <Route path="/" element={<DashboardHome onNavigate={(view) => navigate(`/${view}`)} />} />
           <Route path="/leaderboard" element={<Leaderboard />} />
           <Route path="/verification" element={<VerificationHub />} />
           <Route path="/privacy" element={<PrivacyPolicy onBack={() => navigate('/')} />} />

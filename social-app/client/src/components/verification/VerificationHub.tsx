@@ -10,7 +10,6 @@ import ExchangeHistory from '../exchange/ExchangeHistory';
 import InteractionSuccess from './InteractionSuccess';
 import Button from '../ui/Button';
 import { useAuth } from '../../contexts/AuthContext';
-import { submitInteraction } from '../../services/interactionService';
 import type { InteractionResult } from '../../services/interactionService';
 import { 
   getPendingRequests, 
@@ -32,14 +31,12 @@ const VerificationHub: React.FC = () => {
   const [lastExchange, setLastExchange] = useState<Exchange | null>(null);
   const [interactionResult, setInteractionResult] = useState<InteractionResult | null>(null);
   const [pendingRequests, setPendingRequests] = useState<MeetingRequest[]>([]);
-  const [isLoadingRequests, setIsLoadingRequests] = useState(false);
 
   // Fetch pending requests on mount and subscribe to real-time updates
   useEffect(() => {
     if (!user?.id) return;
 
     const fetchRequests = async () => {
-      setIsLoadingRequests(true);
       const requests = await getPendingRequests(user.id);
       
       // Convert DB format to component format
@@ -59,7 +56,6 @@ const VerificationHub: React.FC = () => {
       }));
       
       setPendingRequests(formattedRequests);
-      setIsLoadingRequests(false);
     };
 
     fetchRequests();
@@ -196,101 +192,6 @@ const VerificationHub: React.FC = () => {
     },
   ];
 
-  const handleQRScan = async (code: string) => {
-    console.log('QR Code scanned:', code);
-    
-    if (!user) return;
-    
-    // Validate and parse QR code format: MEET-{userId}-{timestamp}-{random}
-    const qrParts = code.split('-');
-    if (qrParts.length !== 4 || qrParts[0] !== 'MEET') {
-      setInteractionResult({
-        success: false,
-        message: 'Neplatný QR kód. Skontrolujte formát kódu.',
-        points: 0,
-      });
-      return;
-    }
-    
-    const scannedUserId = qrParts[1];
-    const timestamp = parseInt(qrParts[2]);
-    const expiresAt = timestamp + 5 * 60 * 1000; // 5 minutes
-    
-    // Check if user is scanning their own code
-    if (scannedUserId === user.id) {
-      setInteractionResult({
-        success: false,
-        message: 'Nemôžete naskenovať svoj vlastný QR kód.',
-        points: 0,
-      });
-      return;
-    }
-    
-    // Check if code is expired
-    if (Date.now() > expiresAt) {
-      setInteractionResult({
-        success: false,
-        message: 'QR kód vypršal. Požiadajte o nový kód.',
-        points: 0,
-      });
-      return;
-    }
-    
-    // Submit individual interaction
-    const result = await submitInteraction({
-      userId: user.id,
-      verificationMethod: 'qr_code',
-      interactionType: 'individual',
-      levelType: 'individual',
-      metadata: {
-        qrCode: code,
-        scannedUserId: scannedUserId,
-        timestamp: timestamp,
-      },
-    });
-    setInteractionResult(result);
-    
-    if (result.success) {
-      // Show success with points earned
-      setVerifiedEmail(`user-${scannedUserId}@verified.com`);
-      setFlowState('success');
-      
-      // Reload page to refresh user data
-      setTimeout(() => {
-        window.location.reload();
-      }, 3000);
-    }
-  };
-
-  const handleBluetoothConnect = async (device: any) => {
-    console.log('Bluetooth device connected:', device);
-    
-    if (!user) return;
-    
-    // Submit individual interaction
-    const result = await submitInteraction({
-      userId: user.id,
-      verificationMethod: 'bluetooth',
-      interactionType: 'individual',
-      levelType: 'individual',
-      metadata: {
-        distance: device.distance,
-        deviceId: device.id,
-      },
-    });
-    setInteractionResult(result);
-    
-    if (result.success) {
-      // Show success with points earned
-      setVerifiedEmail('bluetooth.user@email.com');
-      setFlowState('success');
-      
-      // Reload page to refresh user data
-      setTimeout(() => {
-        window.location.reload();
-      }, 3000);
-    }
-  };
 
   const handleSimpleExchange = async (data: { whatIGave: string; whatIGot: string }) => {
     console.log('Simple exchange:', data);
