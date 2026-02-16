@@ -9,6 +9,7 @@ const corsHeaders = {
 interface InteractionRequest {
   whatIGave: string
   whatIGot: string
+  partnerEmail: string
 }
 
 serve(async (req) => {
@@ -51,12 +52,21 @@ serve(async (req) => {
     }
 
     // Parse request body
-    const { whatIGave, whatIGot }: InteractionRequest = await req.json()
+    const { whatIGave, whatIGot, partnerEmail }: InteractionRequest = await req.json()
 
     // Validate input
-    if (!whatIGave || !whatIGot) {
+    if (!whatIGave || !whatIGot || !partnerEmail) {
       return new Response(
-        JSON.stringify({ error: 'Missing required fields: whatIGave and whatIGot' }),
+        JSON.stringify({ error: 'Missing required fields: whatIGave, whatIGot, and partnerEmail' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(partnerEmail)) {
+      return new Response(
+        JSON.stringify({ error: 'Invalid email format for partnerEmail' }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       )
     }
@@ -72,6 +82,7 @@ serve(async (req) => {
     // Sanitize input (basic XSS prevention)
     const sanitizedWhatIGave = whatIGave.trim().replace(/<[^>]*>/g, '')
     const sanitizedWhatIGot = whatIGot.trim().replace(/<[^>]*>/g, '')
+    const sanitizedPartnerEmail = partnerEmail.trim().toLowerCase()
 
     if (sanitizedWhatIGave.length === 0 || sanitizedWhatIGot.length === 0) {
       return new Response(
@@ -130,7 +141,8 @@ serve(async (req) => {
         status: 'confirmed',
         metadata: {
           whatIGave: sanitizedWhatIGave,
-          whatIGot: sanitizedWhatIGot
+          whatIGot: sanitizedWhatIGot,
+          partnerEmail: sanitizedPartnerEmail
         }
       })
       .select()

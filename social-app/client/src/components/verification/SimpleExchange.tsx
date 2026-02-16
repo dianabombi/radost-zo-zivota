@@ -3,19 +3,20 @@ import Button from '../ui/Button';
 import { useAuth } from '../../contexts/AuthContext';
 
 interface SimpleExchangeProps {
-  onSubmit: (data: { whatIGave: string; whatIGot: string }) => void;
+  onSubmit: (data: { whatIGave: string; whatIGot: string; partnerEmail: string }) => void;
 }
 
 const SimpleExchange: React.FC<SimpleExchangeProps> = ({ onSubmit }) => {
   const { user } = useAuth();
   const [whatIGave, setWhatIGave] = useState('');
   const [whatIGot, setWhatIGot] = useState('');
+  const [partnerEmail, setPartnerEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!whatIGave.trim() || !whatIGot.trim()) {
+    if (!whatIGave.trim() || !whatIGot.trim() || !partnerEmail.trim()) {
       return;
     }
 
@@ -27,15 +28,17 @@ const SimpleExchange: React.FC<SimpleExchangeProps> = ({ onSubmit }) => {
     onSubmit({
       whatIGave: whatIGave.trim(),
       whatIGot: whatIGot.trim(),
+      partnerEmail: partnerEmail.trim(),
     });
     
     // Reset form
     setWhatIGave('');
     setWhatIGot('');
+    setPartnerEmail('');
     setIsSubmitting(false);
   };
 
-  const isFormValid = whatIGave.trim().length > 0 && whatIGot.trim().length > 0;
+  const isFormValid = whatIGave.trim().length > 0 && whatIGot.trim().length > 0 && partnerEmail.trim().length > 0 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(partnerEmail.trim());
 
   return (
     <div className="space-y-4 sm:space-y-6">
@@ -119,6 +122,24 @@ const SimpleExchange: React.FC<SimpleExchangeProps> = ({ onSubmit }) => {
             />
             <p className="text-light-text-secondary dark:text-gray-400 font-poppins text-xs mt-1">
               {whatIGot.length}/100 znakov
+            </p>
+          </div>
+
+          {/* Partner Email */}
+          <div>
+            <label className="block text-light-text dark:text-white font-poppins font-semibold text-sm mb-2">
+              📧 Email partnera
+            </label>
+            <input
+              type="email"
+              value={partnerEmail}
+              onChange={(e) => setPartnerEmail(e.target.value)}
+              placeholder="partner@example.com"
+              className="w-full bg-light-surface dark:bg-charcoal border-2 border-light-border dark:border-gray-600 rounded-lg px-4 py-3 text-light-text dark:text-white font-poppins text-sm focus:outline-none focus:border-electric-blue dark:focus:border-vibrant-green transition-colors"
+              disabled={isSubmitting}
+            />
+            <p className="text-light-text-secondary dark:text-gray-400 font-poppins text-xs mt-1">
+              Email osoby, s ktorou si sa stretol
             </p>
           </div>
 

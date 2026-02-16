@@ -23,7 +23,7 @@ type ViewMode = 'methods' | 'pending' | 'history' | 'exchanges';
 type FlowState = 'select_method' | 'verifying' | 'exchange_form' | 'success';
 
 const VerificationHub: React.FC = () => {
-  const { user } = useAuth();
+  const { user, refreshUser } = useAuth();
   const [viewMode, setViewMode] = useState<ViewMode>('methods');
   const [selectedMethod, setSelectedMethod] = useState<VerificationMethod | null>(null);
   const [flowState, setFlowState] = useState<FlowState>('select_method');
@@ -193,24 +193,28 @@ const VerificationHub: React.FC = () => {
   ];
 
 
-  const handleSimpleExchange = async (data: { whatIGave: string; whatIGot: string }) => {
+  const handleSimpleExchange = async (data: { whatIGave: string; whatIGot: string; partnerEmail: string }) => {
     console.log('Simple exchange:', data);
     
     if (!user) return;
     
     // Submit simple exchange with rate limiting via Edge Function
     const { submitSimpleExchange } = await import('../../services/interactionService');
-    const result = await submitSimpleExchange(data.whatIGave, data.whatIGot);
+    const result = await submitSimpleExchange(data.whatIGave, data.whatIGot, data.partnerEmail);
     
     setInteractionResult(result);
     
     if (result.success) {
+      // Refresh user data to show updated points immediately
+      await refreshUser();
+      
       // Show success with points earned
       setFlowState('success');
       
-      // Reload page to refresh user data
+      // Reset form after short delay
       setTimeout(() => {
-        window.location.reload();
+        setFlowState('select_method');
+        setInteractionResult(null);
       }, 3000);
     } else if (result.error) {
       // Show error message (including rate limit errors)

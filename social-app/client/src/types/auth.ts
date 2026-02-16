@@ -44,4 +44,5 @@ export interface AuthContextType {
   logout: () => void;
   clearError: () => void;
   resetPassword: (email: string) => Promise<void>;
+  refreshUser: () => Promise<void>;
 }

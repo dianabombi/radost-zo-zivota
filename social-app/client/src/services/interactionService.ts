@@ -220,7 +220,8 @@ export const submitInteraction = async (data: InteractionData): Promise<Interact
 // Submit simple exchange with rate limiting (uses Edge Function)
 export const submitSimpleExchange = async (
   whatIGave: string,
-  whatIGot: string
+  whatIGot: string,
+  partnerEmail: string
 ): Promise<InteractionResult> => {
   try {
     if (!isSupabaseConfigured) {
@@ -262,7 +263,7 @@ export const submitSimpleExchange = async (
 
     // Call Edge Function with rate limiting
     const { data, error } = await supabase.functions.invoke('submit-interaction', {
-      body: { whatIGave, whatIGot },
+      body: { whatIGave, whatIGot, partnerEmail },
       headers: {
         Authorization: `Bearer ${session.access_token}`,
       },

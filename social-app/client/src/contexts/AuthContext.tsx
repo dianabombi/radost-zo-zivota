@@ -412,6 +412,51 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     dispatch({ type: 'CLEAR_ERROR' });
   };
 
+  const refreshUser = async () => {
+    try {
+      if (!isSupabaseConfigured) {
+        // Refresh mock user from localStorage
+        const mockUserStr = localStorage.getItem('mock_user');
+        if (mockUserStr) {
+          const mockUser = JSON.parse(mockUserStr);
+          dispatch({ type: 'AUTH_SUCCESS', payload: mockUser });
+        }
+        return;
+      }
+
+      // Get current session
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      if (session?.user) {
+        // Fetch fresh user data from database
+        const { data: profile } = await supabase
+          .from('users')
+          .select('*')
+          .eq('id', session.user.id)
+          .single();
+        
+        if (profile) {
+          const user: User = {
+            id: profile.id,
+            email: profile.email,
+            nickname: profile.nickname,
+            avatar: profile.avatar_url,
+            level: profile.level,
+            points: profile.points,
+            city: profile.city,
+            region: profile.region,
+            country: profile.country,
+            createdAt: profile.created_at,
+            lastActive: profile.last_active,
+          };
+          dispatch({ type: 'AUTH_SUCCESS', payload: user });
+        }
+      }
+    } catch (error) {
+      console.error('Error refreshing user:', error);
+    }
+  };
+
   const resetPassword = async (email: string) => {
     dispatch({ type: 'AUTH_START' });
     
@@ -453,6 +498,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     logout,
     clearError,
     resetPassword,
+    refreshUser,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
